@@ -309,14 +309,14 @@ resource "aws_redshiftserverless_workgroup" "analytics" {
 # ATHENA WORKGROUP + NAMED QUERIES
 # ============================================
 resource "aws_athena_workgroup" "primary" {
-  name = "primary"
-
+  name = "${local.prefix}-workgroup"  # Changed from "primary"
+  
   configuration {
     result_configuration {
       output_location = "s3://${aws_s3_bucket.data_lake.id}/athena-results/"
     }
   }
-
+  
   state = "ENABLED"
 }
 
