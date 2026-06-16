@@ -53,8 +53,6 @@ jobs:
     name: 🔧 Setup
     runs-on: ubuntu-latest
     outputs:
-      tf_version: ${{ env.TF_VERSION }}
-      aws_region: ${{ env.AWS_REGION }}
       environment: ${{ github.event.inputs.environment || github.ref_name }}
     steps:
       - name: Checkout Code
@@ -112,7 +110,10 @@ jobs:
       (github.event_name == 'push' ||
        github.event_name == 'pull_request' ||
        github.event.inputs.action == 'full-pipeline' ||
-       github.event.inputs.action == 'validate-only')
+       github.event.inputs.action == 'validate-only' ||
+       github.event.inputs.action == 'plan-only' ||
+       github.event.inputs.action == 'apply-only' ||
+       github.event.inputs.action == 'deploy-pipeline-only')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -224,10 +225,10 @@ jobs:
       (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') &&
       (github.event_name == 'push' ||
        github.event.inputs.action == 'full-pipeline' ||
-       github.event.inputs.action == 'apply-only')
+       github.event.inputs.action == 'apply-only' ||
+       github.event.inputs.action == 'deploy-pipeline-only')
     environment:
       name: ${{ github.event.inputs.environment || github.ref_name }}
-      url: ${{ steps.terraform_output.outputs.console_url }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -336,7 +337,6 @@ jobs:
           aws glue start-crawler --name $CRAWLER
           echo "✅ Crawler started: $CRAWLER"
 
-          # Wait for crawler to complete
           for i in {1..30}; do
             STATE=$(aws glue get-crawler --name $CRAWLER --query 'Crawler.State' --output text 2>/dev/null || echo "UNKNOWN")
             echo "Crawler state: $STATE"
@@ -353,7 +353,6 @@ jobs:
           RUN_ID=$(aws glue start-job-run --job-name $JOB --query 'JobRunId' --output text)
           echo "🚀 Job started: $JOB (Run ID: $RUN_ID)"
 
-          # Wait for job to complete
           for i in {1..60}; do
             STATUS=$(aws glue get-job-run --job-name $JOB --run-id $RUN_ID --query 'JobRun.JobRunState' --output text 2>/dev/null || echo "UNKNOWN")
             echo "Job status: $STATUS"
@@ -362,7 +361,6 @@ jobs:
               break
             elif [[ "$STATUS" == "FAILED" || "$STATUS" == "STOPPED" ]]; then
               echo "❌ Job failed with status: $STATUS"
-              # Get error details
               ERROR=$(aws glue get-job-run --job-name $JOB --run-id $RUN_ID --query 'JobRun.ErrorMessage' --output text 2>/dev/null || echo "Unknown error")
               echo "Error: $ERROR"
               exit 1
@@ -413,7 +411,7 @@ jobs:
           echo "✅ Data pipeline deployed successfully!" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 5: DESTROY
+  # STAGE 5: DESTROY (Manual Only)
   # ============================================
   destroy:
     name: 💀 Destroy
@@ -421,7 +419,6 @@ jobs:
     if: github.event.inputs.action == 'destroy'
     environment:
       name: ${{ github.event.inputs.environment || 'dev' }}
-      action: destroy
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
