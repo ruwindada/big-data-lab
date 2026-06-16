@@ -1,0 +1,14 @@
+# terraform.tfvars.example
+# Copy this to terraform.tfvars and fill in your values
+# terraform.tfvars is in .gitignore — NEVER commit it!
+
+aws_region                = "eu-central-1"
+environment               = "dev"
+owner                     = "your-name"
+cost_center               = "big-data-lab"
+redshift_admin_password   = "ChangeMe123!"  # CHANGE THIS!
+redshift_base_capacity    = 8
+glue_worker_type          = "G.1X"
+glue_number_of_workers    = 2
+glue_timeout_minutes      = 20
+force_destroy_bucket      = true
