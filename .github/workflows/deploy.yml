@@ -47,13 +47,20 @@ env:
 
 jobs:
   # ============================================
-  # STAGE 0: SETUP (Shared)
+  # STAGE 1: VALIDATE (Self-contained)
   # ============================================
-  setup:
-    name: 🔧 Setup
+  validate:
+    name: 🔍 Validate
     runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ github.event.inputs.environment || github.ref_name }}
+    if: |
+      always() &&
+      (github.event_name == 'push' ||
+       github.event_name == 'pull_request' ||
+       github.event.inputs.action == 'full-pipeline' ||
+       github.event.inputs.action == 'validate-only' ||
+       github.event.inputs.action == 'plan-only' ||
+       github.event.inputs.action == 'apply-only' ||
+       github.event.inputs.action == 'deploy-pipeline-only')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -88,53 +95,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      - name: Upload Terraform State
-        uses: actions/upload-artifact@v4
-        with:
-          name: terraform-setup
-          path: |
-            .terraform/
-            terraform.tfvars
-            .terraform.lock.hcl
-          retention-days: 1
-
-  # ============================================
-  # STAGE 1: VALIDATE
-  # ============================================
-  validate:
-    name: 🔍 Validate
-    runs-on: ubuntu-latest
-    needs: setup
-    if: |
-      always() &&
-      (github.event_name == 'push' ||
-       github.event_name == 'pull_request' ||
-       github.event.inputs.action == 'full-pipeline' ||
-       github.event.inputs.action == 'validate-only' ||
-       github.event.inputs.action == 'plan-only' ||
-       github.event.inputs.action == 'apply-only' ||
-       github.event.inputs.action == 'deploy-pipeline-only')
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Download Setup
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-setup
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
       - name: Terraform Validate
         run: terraform validate
 
@@ -149,12 +109,12 @@ jobs:
           echo "✅ Format check completed" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 2: PLAN
+  # STAGE 2: PLAN (Self-contained)
   # ============================================
   plan:
     name: 📋 Plan
     runs-on: ubuntu-latest
-    needs: [setup, validate]
+    needs: validate
     if: |
       always() &&
       (github.event_name == 'push' ||
@@ -163,16 +123,9 @@ jobs:
        github.event.inputs.action == 'plan-only' ||
        github.event.inputs.action == 'apply-only' ||
        github.event.inputs.action == 'deploy-pipeline-only')
-    outputs:
-      plan_exit_code: ${{ steps.plan.outputs.exitcode }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Download Setup
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-setup
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -185,6 +138,24 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.event.inputs.environment || github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
 
       - name: Terraform Plan
         id: plan
@@ -205,22 +176,14 @@ jobs:
           echo "## 📋 Terraform Plan" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ Plan generated successfully" >> $GITHUB_STEP_SUMMARY
-          echo "| Resource | Action |" >> $GITHUB_STEP_SUMMARY
-          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| S3 Bucket | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Database | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Crawler | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Job | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
-          echo "| Redshift Serverless | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
-          echo "| Athena Workgroup | 🟡 Planned |" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 3: APPLY
+  # STAGE 3: APPLY (Self-contained)
   # ============================================
   apply:
     name: 🚀 Apply
     runs-on: ubuntu-latest
-    needs: [setup, plan]
+    needs: plan
     if: |
       (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') &&
       (github.event_name == 'push' ||
@@ -233,16 +196,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Download Setup
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-setup
-
-      - name: Download Plan
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -254,6 +207,29 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.event.inputs.environment || github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Download Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
 
       - name: Terraform Apply
         id: apply
@@ -267,7 +243,6 @@ jobs:
           echo "glue_crawler=$(terraform output -raw glue_crawler_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
           echo "glue_job=$(terraform output -raw glue_job_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
           echo "redshift_endpoint=$(terraform output -raw redshift_endpoint 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
-          echo "console_url=https://console.aws.amazon.com/s3/buckets/$(terraform output -raw s3_bucket 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
 
       - name: Apply Summary
         run: |
@@ -280,7 +255,6 @@ jobs:
           echo "| Glue Crawler | \`${{ steps.terraform_output.outputs.glue_crawler }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Glue Job | \`${{ steps.terraform_output.outputs.glue_job }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| Redshift Endpoint | \`${{ steps.terraform_output.outputs.redshift_endpoint }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Console URL | [Open AWS Console](${{ steps.terraform_output.outputs.console_url }}) |" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # STAGE 4: DEPLOY DATA PIPELINE
@@ -288,7 +262,7 @@ jobs:
   deploy_pipeline:
     name: 🔄 Deploy Pipeline
     runs-on: ubuntu-latest
-    needs: [setup, apply]
+    needs: apply
     if: |
       (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') &&
       (github.event_name == 'push' ||
@@ -297,11 +271,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Download Setup
-        uses: actions/download-artifact@v4
-        with:
-          name: terraform-setup
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -314,6 +283,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
 
       - name: Get Terraform Outputs
         id: outputs
@@ -361,57 +333,19 @@ jobs:
               break
             elif [[ "$STATUS" == "FAILED" || "$STATUS" == "STOPPED" ]]; then
               echo "❌ Job failed with status: $STATUS"
-              ERROR=$(aws glue get-job-run --job-name $JOB --run-id $RUN_ID --query 'JobRun.ErrorMessage' --output text 2>/dev/null || echo "Unknown error")
-              echo "Error: $ERROR"
               exit 1
             fi
             sleep 30
           done
 
-      - name: Run Athena Test Query
-        if: steps.outputs.outputs.glue_database != ''
-        run: |
-          DATABASE="${{ steps.outputs.outputs.glue_database }}"
-          BUCKET="${{ steps.outputs.outputs.s3_bucket }}"
-
-          echo "🔍 Running test query on $DATABASE"
-          QUERY_EXEC_ID=$(aws athena start-query-execution \
-            --query-string "SELECT merchant, COUNT(*) FROM $DATABASE.raw GROUP BY merchant" \
-            --work-group primary \
-            --result-configuration "OutputLocation=s3://$BUCKET/athena-results/" \
-            --query 'QueryExecutionId' --output text 2>/dev/null || echo "")
-
-          if [ -n "$QUERY_EXEC_ID" ]; then
-            echo "Query Execution ID: $QUERY_EXEC_ID"
-            for i in {1..30}; do
-              STATUS=$(aws athena get-query-execution --query-execution-id $QUERY_EXEC_ID --query 'QueryExecution.Status.State' --output text 2>/dev/null || echo "UNKNOWN")
-              echo "Query status: $STATUS"
-              if [[ "$STATUS" == "SUCCEEDED" ]]; then
-                echo "✅ Athena query succeeded"
-                break
-              elif [[ "$STATUS" == "FAILED" ]]; then
-                echo "❌ Athena query failed"
-                break
-              fi
-              sleep 5
-            done
-          fi
-
       - name: Pipeline Summary
         run: |
           echo "## 🔄 Data Pipeline Deployment" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
-          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| S3 Script Upload | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Crawler | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue ETL Job | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
-          echo "| Athena Query | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ Data pipeline deployed successfully!" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 5: DESTROY (Manual Only)
+  # STAGE 5: DESTROY
   # ============================================
   destroy:
     name: 💀 Destroy
@@ -461,4 +395,3 @@ jobs:
           echo "## 💀 Terraform Destroy Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ All resources have been destroyed." >> $GITHUB_STEP_SUMMARY
-          echo "⚠️ S3 bucket was force-destroyed (lab only)" >> $GITHUB_STEP_SUMMARY
