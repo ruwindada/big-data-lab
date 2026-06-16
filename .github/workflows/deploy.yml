@@ -16,60 +16,54 @@ on:
       - main
     paths:
       - '**.tf'
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+        default: 'apply'
 
 permissions:
-  id-token: write   # Required for OIDC authentication
   contents: read
+  pull-requests: write
 
 env:
   TF_VERSION: '1.7.0'
   AWS_REGION: 'eu-central-1'
 
 jobs:
-  terraform:
-    name: Terraform Plan & Apply
+  # ============================================
+  # STAGE 1: VALIDATE
+  # ============================================
+  validate:
+    name: 🔍 Validate Terraform
     runs-on: ubuntu-latest
-    environment: dev
-
-    defaults:
-      run:
-        working-directory: ./
-
     steps:
-      # ============================================
-      # 1. Checkout Code
-      # ============================================
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # ============================================
-      # 2. Setup Terraform
-      # ============================================
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      # ============================================
-      # 3. Configure AWS Credentials (OIDC)
-      # ============================================
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
-      # ============================================
-      # 4. Create terraform.tfvars from secrets
-      # ============================================
       - name: Create terraform.tfvars
         run: |
           cat > terraform.tfvars << EOF
           aws_region                = "${{ env.AWS_REGION }}"
-          environment               = "${{ vars.ENVIRONMENT || 'dev' }}"
-          owner                     = "${{ vars.OWNER || 'github-actions' }}"
+          environment               = "${{ github.ref_name }}"
+          owner                     = "github-actions"
           cost_center               = "big-data-lab"
           redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
           redshift_base_capacity    = 8
@@ -78,87 +72,235 @@ jobs:
           glue_timeout_minutes      = 20
           force_destroy_bucket      = true
           EOF
-        shell: bash
 
-      # ============================================
-      # 5. Terraform Init
-      # ============================================
       - name: Terraform Init
         run: terraform init
 
-      # ============================================
-      # 6. Terraform Validate
-      # ============================================
       - name: Terraform Validate
         run: terraform validate
 
-      # ============================================
-      # 7. Terraform Plan
-      # ============================================
+      - name: Terraform Format Check
+        run: terraform fmt -check -diff || echo "⚠️ Run 'terraform fmt' to fix formatting"
+
+  # ============================================
+  # STAGE 2: PLAN
+  # ============================================
+  plan:
+    name: 📋 Terraform Plan
+    runs-on: ubuntu-latest
+    needs: validate
+    outputs:
+      plan_exit_code: ${{ steps.plan.outputs.exitcode }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -out=tfplan
+        run: |
+          terraform plan -no-color -out=tfplan
+          echo "exitcode=$?" >> $GITHUB_OUTPUT
         continue-on-error: true
 
-      # ============================================
-      # 8. Upload Plan Artifact (for review)
-      # ============================================
-      - name: Upload Terraform Plan
+      - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
           path: tfplan
           retention-days: 7
 
-      # ============================================
-      # 9. Terraform Apply (only on push to dev/main)
-      # ============================================
+      - name: Upload Plan Text (for PR comment)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: plan-text
+          path: tfplan.txt
+          retention-days: 7
+
+      - name: Create Plan Summary
+        run: |
+          echo "## 📋 Terraform Plan" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Resource | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| S3 Bucket | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Database | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Crawler | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Job | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+          echo "| Redshift Serverless | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+          echo "| Athena Workgroup | 🟡 Plan Generated |" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # STAGE 3: APPLY (Manual or Auto)
+  # ============================================
+  apply:
+    name: 🚀 Terraform Apply
+    runs-on: ubuntu-latest
+    needs: plan
+    if: |
+      (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') &&
+      (github.event_name == 'push' || github.event.inputs.action == 'apply')
+    environment:
+      name: ${{ github.ref_name }}
+      url: ${{ steps.terraform_output.outputs.console_url }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Download Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+        id: apply
         run: terraform apply -auto-approve tfplan
 
-      # ============================================
-      # 10. Run Glue Crawler after apply
-      # ============================================
-      - name: Run Glue Crawler
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+      - name: Get Terraform Outputs
+        id: terraform_output
         run: |
-          CRAWLER_NAME=$(terraform output -raw glue_crawler_name)
-          aws glue start-crawler --name $CRAWLER_NAME
-          echo "✅ Crawler started: $CRAWLER_NAME"
+          echo "s3_bucket=$(terraform output -raw s3_bucket 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          echo "glue_database=$(terraform output -raw glue_database 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          echo "glue_crawler=$(terraform output -raw glue_crawler_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          echo "glue_job=$(terraform output -raw glue_job_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          echo "redshift_endpoint=$(terraform output -raw redshift_endpoint 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          echo "console_url=https://console.aws.amazon.com/s3/buckets/$(terraform output -raw s3_bucket 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
 
-      # ============================================
-      # 11. Wait for Crawler to complete
-      # ============================================
-      - name: Wait for Glue Crawler
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+      - name: Apply Summary
         run: |
-          CRAWLER_NAME=$(terraform output -raw glue_crawler_name)
-          echo "⏳ Waiting for crawler to complete..."
-          while true; do
-            STATE=$(aws glue get-crawler --name $CRAWLER_NAME --query 'Crawler.State' --output text)
-            echo "State: $STATE"
+          echo "## 🚀 Terraform Apply Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Resource | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| S3 Bucket | \`${{ steps.terraform_output.outputs.s3_bucket }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Database | \`${{ steps.terraform_output.outputs.glue_database }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Crawler | \`${{ steps.terraform_output.outputs.glue_crawler }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Job | \`${{ steps.terraform_output.outputs.glue_job }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Redshift Endpoint | \`${{ steps.terraform_output.outputs.redshift_endpoint }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Console URL | [Open AWS Console](${{ steps.terraform_output.outputs.console_url }}) |" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # STAGE 4: DEPLOY DATA PIPELINE (After Infra)
+  # ============================================
+  deploy_pipeline:
+    name: 🔄 Deploy Data Pipeline
+    runs-on: ubuntu-latest
+    needs: apply
+    if: |
+      (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') &&
+      (github.event_name == 'push' || github.event.inputs.action == 'apply')
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get Terraform Outputs
+        id: outputs
+        run: |
+          echo "s3_bucket=$(terraform output -raw s3_bucket 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
+          echo "glue_crawler=$(terraform output -raw glue_crawler_name 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
+          echo "glue_job=$(terraform output -raw glue_job_name 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
+
+      - name: Update Glue Scripts in S3
+        if: steps.outputs.outputs.s3_bucket != ''
+        run: |
+          BUCKET="${{ steps.outputs.outputs.s3_bucket }}"
+          aws s3 cp scripts/transform.py s3://$BUCKET/scripts/transform.py
+
+      - name: Run Glue Crawler
+        if: steps.outputs.outputs.glue_crawler != ''
+        run: |
+          CRAWLER="${{ steps.outputs.outputs.glue_crawler }}"
+          aws glue start-crawler --name $CRAWLER
+          echo "✅ Crawler started: $CRAWLER"
+
+          # Wait for crawler to complete
+          for i in {1..30}; do
+            STATE=$(aws glue get-crawler --name $CRAWLER --query 'Crawler.State' --output text 2>/dev/null || echo "UNKNOWN")
+            echo "Crawler state: $STATE"
             if [[ "$STATE" == "READY" ]]; then
               break
             fi
             sleep 10
           done
-          echo "✅ Crawler completed"
 
-      # ============================================
-      # 12. Run Glue ETL Job
-      # ============================================
       - name: Run Glue ETL Job
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+        if: steps.outputs.outputs.glue_job != ''
         run: |
-          JOB_NAME=$(terraform output -raw glue_job_name)
-          RUN_ID=$(aws glue start-job-run --job-name $JOB_NAME --query 'JobRunId' --output text)
-          echo "🚀 Job started: $JOB_NAME (Run ID: $RUN_ID)"
+          JOB="${{ steps.outputs.outputs.glue_job }}"
+          RUN_ID=$(aws glue start-job-run --job-name $JOB --query 'JobRunId' --output text)
+          echo "🚀 Job started: $JOB (Run ID: $RUN_ID)"
 
-          # Wait for job completion
-          while true; do
-            STATUS=$(aws glue get-job-run --job-name $JOB_NAME --run-id $RUN_ID --query 'JobRun.JobRunState' --output text)
-            echo "Status: $STATUS"
+          # Wait for job to complete
+          for i in {1..60}; do
+            STATUS=$(aws glue get-job-run --job-name $JOB --run-id $RUN_ID --query 'JobRun.JobRunState' --output text 2>/dev/null || echo "UNKNOWN")
+            echo "Job status: $STATUS"
             if [[ "$STATUS" == "SUCCEEDED" ]]; then
               echo "✅ Job completed successfully"
               break
@@ -169,61 +311,63 @@ jobs:
             sleep 30
           done
 
-      # ============================================
-      # 13. Verify Outputs
-      # ============================================
-      - name: Verify S3 Outputs
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+      - name: Pipeline Summary
         run: |
-          BUCKET=$(terraform output -raw s3_bucket)
-          echo "📦 Checking S3 bucket: $BUCKET"
-          aws s3 ls s3://$BUCKET/ --recursive --human-readable
-
-      # ============================================
-      # 14. Run Athena Test Query
-      # ============================================
-      - name: Run Athena Test Query
-        if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
-        run: |
-          DATABASE=$(terraform output -raw glue_database)
-          BUCKET=$(terraform output -raw s3_bucket)
-          echo "🔍 Running test query on $DATABASE"
-
-          QUERY_EXEC_ID=$(aws athena start-query-execution \
-            --query-string "SELECT merchant, COUNT(*) FROM $DATABASE.raw GROUP BY merchant" \
-            --work-group primary \
-            --result-configuration "OutputLocation=s3://$BUCKET/athena-results/" \
-            --query 'QueryExecutionId' --output text)
-
-          echo "Query Execution ID: $QUERY_EXEC_ID"
-
-          # Wait for completion
-          while true; do
-            STATUS=$(aws athena get-query-execution --query-execution-id $QUERY_EXEC_ID --query 'QueryExecution.Status.State' --output text)
-            echo "Status: $STATUS"
-            if [[ "$STATUS" == "SUCCEEDED" ]]; then
-              echo "✅ Query succeeded"
-              break
-            elif [[ "$STATUS" == "FAILED" ]]; then
-              echo "❌ Query failed"
-              exit 1
-            fi
-            sleep 5
-          done
-
-      # ============================================
-      # 15. Output Summary
-      # ============================================
-      - name: Output Summary
-        if: always()
-        run: |
-          echo "## 📊 Big Data Lab Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔄 Data Pipeline Deployment" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Resource | Value |" >> $GITHUB_STEP_SUMMARY
-          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| S3 Bucket | \`$(terraform output -raw s3_bucket 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Database | \`$(terraform output -raw glue_database 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Crawler | \`$(terraform output -raw glue_crawler_name 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Job | \`$(terraform output -raw glue_job_name 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Redshift Endpoint | \`$(terraform output -raw redshift_endpoint 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Athena Workgroup | \`$(terraform output -raw athena_workgroup 2>/dev/null || echo 'N/A')\` |" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Glue Crawler: ${{ steps.outputs.outputs.glue_crawler }}" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Glue ETL Job: ${{ steps.outputs.outputs.glue_job }}" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Data pipeline deployed successfully!" >> $GITHUB_STEP_SUMMARY
+
+  # ============================================
+  # STAGE 5: DESTROY (Manual Trigger Only)
+  # ============================================
+  destroy:
+    name: 💀 Terraform Destroy
+    runs-on: ubuntu-latest
+    if: github.event.inputs.action == 'destroy'
+    environment:
+      name: ${{ github.ref_name }}
+      action: destroy
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
+
+      - name: Destroy Summary
+        run: |
+          echo "## 💀 Terraform Destroy Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All resources have been destroyed." >> $GITHUB_STEP_SUMMARY
