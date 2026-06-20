@@ -134,40 +134,40 @@ resource "aws_iam_role_policy" "glue_s3_access" {
 }
 
 # Redshift Role
-resource "aws_iam_role" "redshift_role" {
-  name = "${local.prefix}-redshift-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = { Service = "redshift-serverless.amazonaws.com" }
-      Action = "sts:AssumeRole"
-    }]
-  })
+# resource "aws_iam_role" "redshift_role" {
+#   name = "${local.prefix}-redshift-role"
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [{
+#       Effect = "Allow"
+#       Principal = { Service = "redshift-serverless.amazonaws.com" }
+#       Action = "sts:AssumeRole"
+#     }]
+#   })
 
-  tags = {
-    Name = "${local.prefix}-redshift-role"
-  }
-}
+#   tags = {
+#     Name = "${local.prefix}-redshift-role"
+#   }
+# }
 
-resource "aws_iam_role_policy" "redshift_s3_access" {
-  name = "redshift-s3-access"
-  role = aws_iam_role.redshift_role.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Action = [
-        "s3:GetObject",
-        "s3:ListBucket"
-      ]
-      Resource = [
-        aws_s3_bucket.data_lake.arn,
-        "${aws_s3_bucket.data_lake.arn}/processed/*"
-      ]
-    }]
-  })
-}
+# resource "aws_iam_role_policy" "redshift_s3_access" {
+#   name = "redshift-s3-access"
+#   role = aws_iam_role.redshift_role.id
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [{
+#       Effect = "Allow"
+#       Action = [
+#         "s3:GetObject",
+#         "s3:ListBucket"
+#       ]
+#       Resource = [
+#         aws_s3_bucket.data_lake.arn,
+#         "${aws_s3_bucket.data_lake.arn}/processed/*"
+#       ]
+#     }]
+#   })
+# }
 
 # Athena Role
 resource "aws_iam_role" "athena_role" {
@@ -279,38 +279,38 @@ resource "aws_glue_job" "transform_job" {
 # ============================================
 # REDSHIFT SERVERLESS
 # ============================================
-resource "aws_redshiftserverless_namespace" "analytics" {
-  namespace_name      = "${local.prefix}-namespace"
-  admin_username      = "admin"
-  admin_user_password = var.redshift_admin_password
-  db_name             = "dev"
-  iam_roles           = [aws_iam_role.redshift_role.arn]
+# resource "aws_redshiftserverless_namespace" "analytics" {
+#   namespace_name      = "${local.prefix}-namespace"
+#   admin_username      = "admin"
+#   admin_user_password = var.redshift_admin_password
+#   db_name             = "dev"
+#   iam_roles           = [aws_iam_role.redshift_role.arn]
 
-  tags = {
-    Name = "${local.prefix}-namespace"
-  }
-}
+#   tags = {
+#     Name = "${local.prefix}-namespace"
+#   }
+# }
 
-resource "aws_redshiftserverless_workgroup" "analytics" {
-  workgroup_name = "${local.prefix}-workgroup"
-  namespace_name = aws_redshiftserverless_namespace.analytics.namespace_name
-  base_capacity  = var.redshift_base_capacity
+# resource "aws_redshiftserverless_workgroup" "analytics" {
+#   workgroup_name = "${local.prefix}-workgroup"
+#   namespace_name = aws_redshiftserverless_namespace.analytics.namespace_name
+#   base_capacity  = var.redshift_base_capacity
 
-  publicly_accessible = true
+#   publicly_accessible = true
 
-  tags = {
-    Name = "${local.prefix}-workgroup"
-  }
+#   tags = {
+#     Name = "${local.prefix}-workgroup"
+#   }
 
-  depends_on = [aws_redshiftserverless_namespace.analytics]
+#   depends_on = [aws_redshiftserverless_namespace.analytics]
 
-  # TIMEOUT BLOCK
-  timeouts {
-    create = "30m"
-    update = "30m"
-    delete = "30m"
-  }
-}
+#   # TIMEOUT BLOCK
+#   timeouts {
+#     create = "30m"
+#     update = "30m"
+#     delete = "30m"
+#   }
+# }
 
 # ============================================
 # ATHENA WORKGROUP + NAMED QUERIES

@@ -24,25 +24,25 @@ output "glue_job_name" {
   value       = aws_glue_job.transform_job.name
 }
 
-output "redshift_workgroup" {
-  description = "Name of the Redshift Serverless workgroup"
-  value       = aws_redshiftserverless_workgroup.analytics.workgroup_name
-}
+# output "redshift_workgroup" {
+#   description = "Name of the Redshift Serverless workgroup"
+#   value       = aws_redshiftserverless_workgroup.analytics.workgroup_name
+# }
 
-output "redshift_endpoint" {
-  description = "Redshift Serverless endpoint address"
-  value       = aws_redshiftserverless_workgroup.analytics.endpoint[0].address
-}
+# output "redshift_endpoint" {
+#   description = "Redshift Serverless endpoint address"
+#   value       = aws_redshiftserverless_workgroup.analytics.endpoint[0].address
+# }
 
-output "redshift_port" {
-  description = "Redshift Serverless port"
-  value       = aws_redshiftserverless_workgroup.analytics.endpoint[0].port
-}
+# output "redshift_port" {
+#   description = "Redshift Serverless port"
+#   value       = aws_redshiftserverless_workgroup.analytics.endpoint[0].port
+# }
 
-output "redshift_role_arn" {
-  description = "ARN of the Redshift IAM role"
-  value       = aws_iam_role.redshift_role.arn
-}
+# output "redshift_role_arn" {
+#   description = "ARN of the Redshift IAM role"
+#   value       = aws_iam_role.redshift_role.arn
+# }
 
 output "athena_workgroup" {
   description = "Name of the Athena workgroup"
