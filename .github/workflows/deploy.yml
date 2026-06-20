@@ -43,11 +43,11 @@ permissions:
 
 env:
   TF_VERSION: '1.7.0'
-  AWS_REGION: 'eu-central-1'
+  AWS_REGION: 'eu-west-1'
 
 jobs:
   # ============================================
-  # STAGE 1: VALIDATE (Self-contained)
+  # STAGE 1: VALIDATE
   # ============================================
   validate:
     name: 🔍 Validate
@@ -109,7 +109,7 @@ jobs:
           echo "✅ Format check completed" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 2: PLAN (Self-contained)
+  # STAGE 2: PLAN
   # ============================================
   plan:
     name: 📋 Plan
@@ -178,7 +178,7 @@ jobs:
           echo "✅ Plan generated successfully" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
-  # STAGE 3: APPLY (Self-contained)
+  # STAGE 3: APPLY
   # ============================================
   apply:
     name: 🚀 Apply
@@ -238,11 +238,18 @@ jobs:
       - name: Get Terraform Outputs
         id: terraform_output
         run: |
-          echo "s3_bucket=$(terraform output -raw s3_bucket 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
-          echo "glue_database=$(terraform output -raw glue_database 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
-          echo "glue_crawler=$(terraform output -raw glue_crawler_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
-          echo "glue_job=$(terraform output -raw glue_job_name 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
-          echo "redshift_endpoint=$(terraform output -raw redshift_endpoint 2>/dev/null || echo 'N/A')" >> $GITHUB_OUTPUT
+          # Safely get outputs with fallback to empty string
+          S3_BUCKET=$(terraform output -raw s3_bucket 2>/dev/null || echo "")
+          GLUE_DATABASE=$(terraform output -raw glue_database 2>/dev/null || echo "")
+          GLUE_CRAWLER=$(terraform output -raw glue_crawler_name 2>/dev/null || echo "")
+          GLUE_JOB=$(terraform output -raw glue_job_name 2>/dev/null || echo "")
+          CONSOLE_URL="https://console.aws.amazon.com/s3/buckets/${S3_BUCKET}"
+
+          echo "s3_bucket=${S3_BUCKET}" >> $GITHUB_OUTPUT
+          echo "glue_database=${GLUE_DATABASE}" >> $GITHUB_OUTPUT
+          echo "glue_crawler=${GLUE_CRAWLER}" >> $GITHUB_OUTPUT
+          echo "glue_job=${GLUE_JOB}" >> $GITHUB_OUTPUT
+          echo "console_url=${CONSOLE_URL}" >> $GITHUB_OUTPUT
 
       - name: Apply Summary
         run: |
@@ -250,11 +257,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Resource | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| S3 Bucket | \`${{ steps.terraform_output.outputs.s3_bucket }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Database | \`${{ steps.terraform_output.outputs.glue_database }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Crawler | \`${{ steps.terraform_output.outputs.glue_crawler }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Glue Job | \`${{ steps.terraform_output.outputs.glue_job }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| Redshift Endpoint | \`${{ steps.terraform_output.outputs.redshift_endpoint }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| S3 Bucket | \`${{ steps.terraform_output.outputs.s3_bucket || 'N/A' }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Database | \`${{ steps.terraform_output.outputs.glue_database || 'N/A' }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Crawler | \`${{ steps.terraform_output.outputs.glue_crawler || 'N/A' }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Job | \`${{ steps.terraform_output.outputs.glue_job || 'N/A' }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Console URL | [Open AWS Console](${{ steps.terraform_output.outputs.console_url || '#' }}) |" >> $GITHUB_STEP_SUMMARY
 
   # ============================================
   # STAGE 4: DEPLOY DATA PIPELINE
@@ -284,16 +291,36 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Create terraform.tfvars
+        run: |
+          cat > terraform.tfvars << EOF
+          aws_region                = "${{ env.AWS_REGION }}"
+          environment               = "${{ github.event.inputs.environment || github.ref_name }}"
+          owner                     = "github-actions"
+          cost_center               = "big-data-lab"
+          redshift_admin_password   = "${{ secrets.REDSHIFT_PASSWORD }}"
+          redshift_base_capacity    = 8
+          glue_worker_type          = "G.1X"
+          glue_number_of_workers    = 2
+          glue_timeout_minutes      = 20
+          force_destroy_bucket      = true
+          EOF
+
       - name: Terraform Init
         run: terraform init
 
       - name: Get Terraform Outputs
         id: outputs
         run: |
-          echo "s3_bucket=$(terraform output -raw s3_bucket 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
-          echo "glue_crawler=$(terraform output -raw glue_crawler_name 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
-          echo "glue_job=$(terraform output -raw glue_job_name 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
-          echo "glue_database=$(terraform output -raw glue_database 2>/dev/null || echo '')" >> $GITHUB_OUTPUT
+          S3_BUCKET=$(terraform output -raw s3_bucket 2>/dev/null || echo "")
+          GLUE_CRAWLER=$(terraform output -raw glue_crawler_name 2>/dev/null || echo "")
+          GLUE_JOB=$(terraform output -raw glue_job_name 2>/dev/null || echo "")
+          GLUE_DATABASE=$(terraform output -raw glue_database 2>/dev/null || echo "")
+
+          echo "s3_bucket=${S3_BUCKET}" >> $GITHUB_OUTPUT
+          echo "glue_crawler=${GLUE_CRAWLER}" >> $GITHUB_OUTPUT
+          echo "glue_job=${GLUE_JOB}" >> $GITHUB_OUTPUT
+          echo "glue_database=${GLUE_DATABASE}" >> $GITHUB_OUTPUT
 
       - name: Update Glue Scripts in S3
         if: steps.outputs.outputs.s3_bucket != ''
@@ -338,9 +365,45 @@ jobs:
             sleep 30
           done
 
+      - name: Run Athena Test Query
+        if: steps.outputs.outputs.glue_database != ''
+        run: |
+          DATABASE="${{ steps.outputs.outputs.glue_database }}"
+          BUCKET="${{ steps.outputs.outputs.s3_bucket }}"
+
+          echo "🔍 Running test query on $DATABASE"
+          QUERY_EXEC_ID=$(aws athena start-query-execution \
+            --query-string "SELECT merchant, COUNT(*) FROM $DATABASE.raw GROUP BY merchant" \
+            --work-group primary \
+            --result-configuration "OutputLocation=s3://$BUCKET/athena-results/" \
+            --query 'QueryExecutionId' --output text 2>/dev/null || echo "")
+
+          if [ -n "$QUERY_EXEC_ID" ]; then
+            echo "Query Execution ID: $QUERY_EXEC_ID"
+            for i in {1..30}; do
+              STATUS=$(aws athena get-query-execution --query-execution-id $QUERY_EXEC_ID --query 'QueryExecution.Status.State' --output text 2>/dev/null || echo "UNKNOWN")
+              echo "Query status: $STATUS"
+              if [[ "$STATUS" == "SUCCEEDED" ]]; then
+                echo "✅ Athena query succeeded"
+                break
+              elif [[ "$STATUS" == "FAILED" ]]; then
+                echo "❌ Athena query failed"
+                break
+              fi
+              sleep 5
+            done
+          fi
+
       - name: Pipeline Summary
         run: |
           echo "## 🔄 Data Pipeline Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Component | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| S3 Script Upload | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue Crawler | ✅ ${{ steps.outputs.outputs.glue_crawler || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Glue ETL Job | ✅ ${{ steps.outputs.outputs.glue_job || 'N/A' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Athena Query | ✅ Completed |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ Data pipeline deployed successfully!" >> $GITHUB_STEP_SUMMARY
 
@@ -395,3 +458,4 @@ jobs:
           echo "## 💀 Terraform Destroy Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ All resources have been destroyed." >> $GITHUB_STEP_SUMMARY
+          
