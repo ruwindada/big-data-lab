@@ -96,9 +96,10 @@ output "commands" {
       --result-configuration "OutputLocation=s3://${aws_s3_bucket.data_lake.id}/athena-results/"
 
     # ---- REDSHIFT CONNECTION ----
-
-    # Endpoint: ${aws_redshiftserverless_workgroup.analytics.endpoint[0].address}
-    # Port: ${aws_redshiftserverless_workgroup.analytics.endpoint[0].port}
+    # ⚠️ Redshift Serverless is DISABLED due to timeout issues
+    # To enable, uncomment Redshift resources in main.tf
+    # Endpoint: (disabled)
+    # Port: (disabled)
     # Database: dev
     # Username: admin
     # Password: (see terraform.tfvars)
