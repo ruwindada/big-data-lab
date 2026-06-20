@@ -303,6 +303,13 @@ resource "aws_redshiftserverless_workgroup" "analytics" {
   }
 
   depends_on = [aws_redshiftserverless_namespace.analytics]
+
+  # TIMEOUT BLOCK
+  timeouts {
+    create = "30m"
+    update = "30m"
+    delete = "30m"
+  }
 }
 
 # ============================================
