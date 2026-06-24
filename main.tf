@@ -65,8 +65,8 @@ resource "aws_s3_object" "folders" {
 resource "aws_s3_object" "sample_data" {
   bucket = aws_s3_bucket.data_lake.id
   key    = "raw/transactions_${formatdate("YYYY-MM-DD", timestamp())}.csv"
-  source = "${path.module}/data/transactions.csv"
-  etag   = filemd5("${path.module}/data/transactions.csv")
+  source = "${path.module}/data/transactions11.csv"
+  etag   = filemd5("${path.module}/data/transactions11.csv")
 
   content_type = "text/csv"
 }
