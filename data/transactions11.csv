@@ -1,0 +1,501 @@
+application_id,customer_id,vehicle_brand,vehicle_model,vehicle_year,vehicle_price_eur,loan_amount_eur,down_payment_eur,loan_term_months,interest_rate,monthly_payment_eur,application_date,approval_status,employment_status,credit_score,debt_to_income_ratio,previous_loans,loan_purpose,finance_type,vehicle_fuel_type,vehicle_category
+APP001,CUST1001,BMW,3 Series,2023,45000,40500,4500,48,4.50,923,2026-01-15,approved,Full-time,720,35,1,Private,Installment,Petrol,Sedan
+APP002,CUST1002,Volkswagen,Golf,2024,32000,28800,3200,36,3.90,848,2026-01-16,approved,Full-time,750,28,0,Private,Installment,Petrol,Hatchback
+APP003,CUST1003,Audi,A4,2022,38000,34200,3800,60,4.80,642,2026-01-16,approved,Full-time,680,42,2,Private,Installment,Diesel,Sedan
+APP004,CUST1004,Mercedes-Benz,C-Class,2023,52000,46800,5200,48,5.20,1081,2026-01-17,approved,Self-employed,690,38,1,Private,Installment,Petrol,Sedan
+APP005,CUST1005,BMW,X3,2024,58000,52200,5800,36,4.70,1557,2026-01-17,approved,Full-time,780,25,0,Private,Installment,Diesel,SUV
+APP006,CUST1006,Volkswagen,Tiguan,2023,42000,37800,4200,48,4.20,857,2026-01-18,approved,Full-time,710,32,1,Private,Installment,Diesel,SUV
+APP007,CUST1007,Audi,Q5,2024,51000,45900,5100,60,5.00,866,2026-01-18,approved,Part-time,650,45,2,Private,Installment,Diesel,SUV
+APP008,CUST1008,Opel,Astra,2023,26000,23400,2600,36,3.50,686,2026-01-19,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP009,CUST1009,Ford,Focus,2022,24000,21600,2400,48,3.80,487,2026-01-19,approved,Full-time,730,28,1,Private,Installment,Petrol,Hatchback
+APP010,CUST1010,Mercedes-Benz,E-Class,2024,65000,58500,6500,60,5.50,1117,2026-01-20,approved,Full-time,800,22,0,Private,Installment,Diesel,Sedan
+APP011,CUST1011,BMW,5 Series,2022,48000,43200,4800,48,4.60,988,2026-01-20,approved,Self-employed,670,40,2,Private,Installment,Diesel,Sedan
+APP012,CUST1012,Volkswagen,ID.4,2024,46000,41400,4600,36,3.80,1216,2026-01-21,approved,Full-time,740,30,0,Private,EV Finance,Electric,SUV
+APP013,CUST1013,Audi,e-tron,2024,70000,63000,7000,48,4.90,1448,2026-01-21,approved,Full-time,760,28,0,Private,EV Finance,Electric,SUV
+APP014,CUST1014,Tesla,Model Y,2024,55000,49500,5500,60,4.50,923,2026-01-22,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP015,CUST1015,BMW,i4,2024,62000,55800,6200,48,5.00,1285,2026-01-22,approved,Full-time,770,26,0,Private,EV Finance,Electric,Sedan
+APP016,CUST1016,Volkswagen,Passat,2023,35000,31500,3500,36,3.70,926,2026-01-23,approved,Full-time,720,34,1,Private,Leasing,Petrol,Sedan
+APP017,CUST1017,Audi,A6,2023,55000,49500,5500,48,4.80,1136,2026-01-23,approved,Self-employed,680,44,2,Private,Leasing,Diesel,Sedan
+APP018,CUST1018,Mercedes-Benz,GLC,2023,60000,54000,6000,60,5.20,1025,2026-01-24,approved,Full-time,700,36,1,Private,Leasing,Diesel,SUV
+APP019,CUST1019,Ford,Transit,2023,38000,34200,3800,48,4.00,779,2026-01-24,approved,Full-time,690,38,1,Commercial,Commercial,Diesel,Van
+APP020,CUST1020,Mercedes-Benz,Sprinter,2024,45000,40500,4500,60,4.50,756,2026-01-25,approved,Self-employed,660,42,2,Commercial,Commercial,Diesel,Van
+APP021,CUST1021,BMW,X5,2023,65000,58500,6500,48,5.10,1351,2026-01-25,approved,Full-time,750,30,0,Private,Installment,Diesel,SUV
+APP022,CUST1022,Volkswagen,T-Roc,2024,28000,25200,2800,36,3.40,738,2026-01-26,approved,Full-time,730,28,1,Private,Installment,Petrol,SUV
+APP023,CUST1023,Audi,Q3,2024,39000,35100,3900,48,4.30,801,2026-01-26,approved,Part-time,640,48,2,Private,Installment,Diesel,SUV
+APP024,CUST1024,Tesla,Model 3,2024,45000,40500,4500,36,4.20,1199,2026-01-27,approved,Full-time,780,22,0,Private,EV Finance,Electric,Sedan
+APP025,CUST1025,Opel,Mokka,2023,24000,21600,2400,48,3.50,485,2026-01-27,approved,Full-time,710,32,1,Private,Installment,Petrol,SUV
+APP026,CUST1026,Ford,Kuga,2023,30000,27000,3000,48,3.80,608,2026-01-28,approved,Self-employed,670,40,1,Private,Installment,Diesel,SUV
+APP027,CUST1027,Mercedes-Benz,GLA,2024,42000,37800,4200,48,4.60,864,2026-01-28,approved,Full-time,740,28,0,Private,Installment,Petrol,SUV
+APP028,CUST1028,BMW,X1,2024,44000,39600,4400,36,4.00,1170,2026-01-29,approved,Full-time,720,32,1,Private,Installment,Diesel,SUV
+APP029,CUST1029,Volkswagen,Caddy,2023,32000,28800,3200,48,3.90,650,2026-01-29,approved,Full-time,700,34,1,Commercial,Commercial,Diesel,Van
+APP030,CUST1030,Audi,Q7,2024,72000,64800,7200,60,5.30,1233,2026-01-30,approved,Full-time,760,28,0,Private,Installment,Diesel,SUV
+APP031,CUST1031,Tesla,Model S,2024,85000,76500,8500,48,5.50,1783,2026-01-30,approved,Full-time,790,24,0,Private,EV Finance,Electric,Sedan
+APP032,CUST1032,Mercedes-Benz,EQB,2024,56000,50400,5600,48,4.70,1160,2026-01-31,approved,Full-time,750,30,0,Private,EV Finance,Electric,SUV
+APP033,CUST1033,BMW,iX3,2024,68000,61200,6800,60,5.10,1159,2026-01-31,approved,Full-time,770,26,0,Private,EV Finance,Electric,SUV
+APP034,CUST1034,Volkswagen,ID.5,2024,50000,45000,5000,48,4.30,1030,2026-02-01,approved,Self-employed,680,44,1,Private,EV Finance,Electric,SUV
+APP035,CUST1035,Audi,A8,2024,95000,85500,9500,60,5.80,1646,2026-02-01,approved,Full-time,810,20,0,Private,Installment,Diesel,Sedan
+APP036,CUST1036,BMW,7 Series,2023,85000,76500,8500,48,5.60,1788,2026-02-02,approved,Self-employed,700,38,1,Private,Installment,Diesel,Sedan
+APP037,CUST1037,Mercedes-Benz,S-Class,2024,110000,99000,11000,60,6.00,1913,2026-02-02,approved,Full-time,830,18,0,Private,Installment,Diesel,Sedan
+APP038,CUST1038,Opel,Insignia,2023,28000,25200,2800,36,3.40,738,2026-02-03,approved,Full-time,690,36,1,Private,Installment,Diesel,Sedan
+APP039,CUST1039,Ford,Ranger,2024,38000,34200,3800,48,4.20,776,2026-02-03,approved,Full-time,710,32,0,Commercial,Commercial,Diesel,Pickup
+APP040,CUST1040,Volkswagen,Amarok,2024,42000,37800,4200,48,4.40,858,2026-02-04,approved,Self-employed,670,40,1,Commercial,Commercial,Diesel,Pickup
+APP041,CUST1041,Tesla,Cybertruck,2024,95000,85500,9500,60,5.50,1633,2026-02-04,approved,Full-time,790,24,0,Private,EV Finance,Electric,Pickup
+APP042,CUST1042,Audi,RS e-tron,2024,105000,94500,10500,48,5.80,2220,2026-02-05,approved,Full-time,810,20,0,Private,EV Finance,Electric,SUV
+APP043,CUST1043,BMW,M4,2024,85000,76500,8500,48,5.40,1782,2026-02-05,approved,Full-time,780,26,0,Private,Installment,Petrol,Coupe
+APP044,CUST1044,Mercedes-Benz,AMG GT,2024,120000,108000,12000,60,6.20,2097,2026-02-06,approved,Self-employed,730,35,1,Private,Installment,Petrol,Coupe
+APP045,CUST1045,Volkswagen,ID.7,2024,55000,49500,5500,48,4.50,1139,2026-02-06,approved,Full-time,760,28,0,Private,EV Finance,Electric,Sedan
+APP046,CUST1046,Ford,Mustang,2024,60000,54000,6000,48,5.20,1249,2026-02-07,approved,Full-time,740,30,0,Private,Installment,Petrol,Coupe
+APP047,CUST1047,Opel,Crossland,2023,22000,19800,2200,36,3.20,579,2026-02-07,approved,Full-time,700,32,1,Private,Installment,Petrol,SUV
+APP048,CUST1048,BMW,iX,2024,80000,72000,8000,60,5.30,1369,2026-02-08,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP049,CUST1049,Mercedes-Benz,GLB,2024,46000,41400,4600,48,4.50,953,2026-02-08,approved,Full-time,730,28,0,Private,Installment,Diesel,SUV
+APP050,CUST1050,Audi,Q4 e-tron,2024,54000,48600,5400,48,4.60,1117,2026-02-09,approved,Full-time,750,26,0,Private,EV Finance,Electric,SUV
+APP051,CUST1051,Toyota,Corolla,2024,28000,25200,2800,48,3.60,566,2026-02-10,approved,Full-time,710,30,1,Private,Installment,Hybrid,Sedan
+APP052,CUST1052,Honda,Civic,2024,32000,28800,3200,36,3.70,846,2026-02-10,approved,Full-time,730,28,0,Private,Installment,Petrol,Hatchback
+APP053,CUST1053,Nissan,Qashqai,2024,34000,30600,3400,48,3.90,689,2026-02-11,approved,Full-time,700,34,1,Private,Installment,Petrol,SUV
+APP054,CUST1054,Mazda,CX-5,2024,36000,32400,3600,48,4.00,730,2026-02-11,approved,Self-employed,690,38,1,Private,Installment,Diesel,SUV
+APP055,CUST1055,Hyundai,Tucson,2024,33000,29700,3300,48,3.80,669,2026-02-12,approved,Full-time,720,32,0,Private,Installment,Diesel,SUV
+APP056,CUST1056,Kia,Sportage,2024,32000,28800,3200,48,3.70,648,2026-02-12,approved,Full-time,710,30,1,Private,Installment,Diesel,SUV
+APP057,CUST1057,Subaru,Forester,2024,38000,34200,3800,48,4.10,775,2026-02-13,approved,Full-time,740,28,0,Private,Installment,Petrol,SUV
+APP058,CUST1058,Suzuki,Swift,2024,19000,17100,1900,36,3.20,500,2026-02-13,approved,Full-time,690,32,0,Private,Installment,Petrol,Hatchback
+APP059,CUST1059,Lexus,NX,2024,50000,45000,5000,48,4.50,1033,2026-02-14,approved,Full-time,780,24,0,Private,Installment,Hybrid,SUV
+APP060,CUST1060,Mitsubishi,Outlander,2024,37000,33300,3700,48,3.90,750,2026-02-14,approved,Full-time,710,32,1,Private,Installment,Hybrid,SUV
+APP061,CUST1061,Volvo,XC60,2024,52000,46800,5200,48,4.60,1074,2026-02-15,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP062,CUST1062,Jaguar,F-Pace,2024,58000,52200,5800,48,4.80,1198,2026-02-15,approved,Self-employed,720,34,1,Private,Installment,Diesel,SUV
+APP063,CUST1063,Land Rover,Evoque,2024,51000,45900,5100,48,4.70,1054,2026-02-16,approved,Full-time,740,30,0,Private,Installment,Diesel,SUV
+APP064,CUST1064,Polestar,2,2024,48000,43200,4800,48,4.30,992,2026-02-16,approved,Full-time,770,26,0,Private,EV Finance,Electric,Sedan
+APP065,CUST1065,BYD,Seal,2024,42000,37800,4200,48,4.20,862,2026-02-17,approved,Full-time,750,28,0,Private,EV Finance,Electric,Sedan
+APP066,CUST1066,Renault,Megane,2024,32000,28800,3200,48,3.60,648,2026-02-17,approved,Full-time,710,32,1,Private,Installment,Petrol,Hatchback
+APP067,CUST1067,Peugeot,3008,2024,35000,31500,3500,48,3.70,710,2026-02-18,approved,Full-time,720,30,0,Private,Installment,Diesel,SUV
+APP068,CUST1068,Citroën,C5 Aircross,2024,34000,30600,3400,48,3.60,689,2026-02-18,approved,Self-employed,690,36,1,Private,Installment,Diesel,SUV
+APP069,CUST1069,Fiat,500,2024,22000,19800,2200,36,3.20,579,2026-02-19,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP070,CUST1070,Volkswagen,ID.Buzz,2024,60000,54000,6000,48,4.60,1239,2026-02-19,approved,Full-time,780,24,0,Private,EV Finance,Electric,Van
+APP071,CUST1071,BMW,X5,2024,72000,64800,7200,60,5.40,1234,2026-02-20,approved,Full-time,790,22,0,Private,Leasing,Diesel,SUV
+APP072,CUST1072,Mercedes-Benz,EQS,2024,100000,90000,10000,48,5.80,2094,2026-02-20,approved,Full-time,820,18,0,Private,EV Finance,Electric,Sedan
+APP073,CUST1073,Audi,Q8 e-tron,2024,85000,76500,8500,60,5.50,1462,2026-02-21,approved,Self-employed,760,28,0,Private,EV Finance,Electric,SUV
+APP074,CUST1074,Tesla,Model X,2024,95000,85500,9500,60,5.60,1639,2026-02-21,approved,Full-time,810,20,0,Private,EV Finance,Electric,SUV
+APP075,CUST1075,Ford,Explorer,2024,48000,43200,4800,48,4.20,981,2026-02-22,approved,Full-time,740,30,0,Private,Installment,Diesel,SUV
+APP076,CUST1076,Opel,Grandland,2024,35000,31500,3500,48,3.70,710,2026-02-22,approved,Full-time,720,32,1,Private,Installment,Diesel,SUV
+APP077,CUST1077,Toyota,RAV4,2024,42000,37800,4200,48,3.90,850,2026-02-23,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP078,CUST1078,Honda,CR-V,2024,40000,36000,4000,48,3.80,811,2026-02-23,approved,Self-employed,730,30,1,Private,Installment,Hybrid,SUV
+APP079,CUST1079,Nissan,X-Trail,2024,38000,34200,3800,48,3.70,771,2026-02-24,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP080,CUST1080,Mazda,6,2024,36000,32400,3600,48,3.80,729,2026-02-24,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP081,CUST1081,Hyundai,IONIQ 5,2024,48000,43200,4800,48,4.20,991,2026-02-25,approved,Full-time,780,24,0,Private,EV Finance,Electric,SUV
+APP082,CUST1082,Kia,EV6,2024,47000,42300,4700,48,4.10,971,2026-02-25,approved,Full-time,770,26,0,Private,EV Finance,Electric,SUV
+APP083,CUST1083,Subaru,Outback,2024,41000,36900,4100,48,4.00,830,2026-02-26,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP084,CUST1084,Suzuki,Vitara,2024,24000,21600,2400,48,3.30,485,2026-02-26,approved,Full-time,710,32,1,Private,Installment,Petrol,SUV
+APP085,CUST1085,Lexus,UX,2024,38000,34200,3800,48,4.00,774,2026-02-27,approved,Full-time,750,26,0,Private,Installment,Hybrid,SUV
+APP086,CUST1086,Mitsubishi,Eclipse,2024,33000,29700,3300,48,3.70,669,2026-02-27,approved,Full-time,720,30,1,Private,Installment,Petrol,SUV
+APP087,CUST1087,Volvo,XC40,2024,46000,41400,4600,48,4.30,950,2026-02-28,approved,Full-time,760,28,0,Private,Installment,Diesel,SUV
+APP088,CUST1088,Jaguar,I-PACE,2024,75000,67500,7500,48,5.00,1554,2026-02-28,approved,Self-employed,740,32,0,Private,EV Finance,Electric,SUV
+APP089,CUST1089,Land Rover,Discovery,2024,65000,58500,6500,60,5.20,1111,2026-03-01,approved,Full-time,780,26,0,Private,Installment,Diesel,SUV
+APP090,CUST1090,Polestar,3,2024,75000,67500,7500,48,5.10,1559,2026-03-01,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP091,CUST1091,BYD,Atto 3,2024,40000,36000,4000,48,4.00,811,2026-03-02,approved,Full-time,750,28,0,Private,EV Finance,Electric,SUV
+APP092,CUST1092,Renault,Scenic,2024,35000,31500,3500,48,3.60,710,2026-03-02,approved,Full-time,720,32,1,Private,Installment,Petrol,SUV
+APP093,CUST1093,Peugeot,508,2024,40000,36000,4000,48,3.80,811,2026-03-03,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP094,CUST1094,Citroën,C4,2024,30000,27000,3000,48,3.50,608,2026-03-03,approved,Self-employed,700,34,1,Private,Installment,Petrol,Hatchback
+APP095,CUST1095,Fiat,500X,2024,26000,23400,2600,48,3.40,526,2026-03-04,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP096,CUST1096,BMW,M2,2024,70000,63000,7000,48,5.30,1458,2026-03-04,approved,Full-time,790,22,0,Private,Installment,Petrol,Coupe
+APP097,CUST1097,Mercedes-Benz,CLS,2024,85000,76500,8500,48,5.60,1788,2026-03-05,approved,Full-time,800,20,0,Private,Installment,Diesel,Sedan
+APP098,CUST1098,Audi,RS6,2024,120000,108000,12000,60,6.00,2097,2026-03-05,approved,Self-employed,770,28,0,Private,Installment,Petrol,Wagon
+APP099,CUST1099,Volkswagen,Arteon,2024,50000,45000,5000,48,4.20,1033,2026-03-06,approved,Full-time,740,30,0,Private,Installment,Diesel,Sedan
+APP100,CUST1100,Tesla,Roadster,2024,150000,135000,15000,60,6.50,2630,2026-03-06,approved,Full-time,850,15,0,Private,EV Finance,Electric,Sports
+APP101,CUST1101,BMW,X5 M,2024,95000,85500,9500,60,5.80,1646,2026-03-07,approved,Full-time,810,20,0,Private,Installment,Petrol,SUV
+APP102,CUST1102,Mercedes-Benz,GLE,2024,75000,67500,7500,60,5.40,1285,2026-03-07,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP103,CUST1103,Audi,R8,2024,160000,144000,16000,60,6.80,2835,2026-03-08,approved,Self-employed,800,18,0,Private,Installment,Petrol,Sports
+APP104,CUST1104,Porsche,Taycan,2024,110000,99000,11000,48,5.90,2320,2026-03-08,approved,Full-time,830,16,0,Private,EV Finance,Electric,Sports
+APP105,CUST1105,Porsche,Cayenne,2024,95000,85500,9500,60,5.70,1640,2026-03-09,approved,Full-time,820,18,0,Private,Installment,Diesel,SUV
+APP106,CUST1106,BMW,8 Series,2024,100000,90000,10000,60,6.00,1730,2026-03-09,approved,Full-time,810,20,0,Private,Installment,Diesel,Coupe
+APP107,CUST1107,Mercedes-Benz,G-Class,2024,160000,144000,16000,60,6.80,2835,2026-03-10,approved,Full-time,850,15,0,Private,Installment,Diesel,SUV
+APP108,CUST1108,Audi,A3,2024,35000,31500,3500,48,3.70,710,2026-03-10,approved,Full-time,720,30,1,Private,Installment,Petrol,Hatchback
+APP109,CUST1109,Volkswagen,ID.3,2024,40000,36000,4000,48,3.90,811,2026-03-11,approved,Full-time,740,28,0,Private,EV Finance,Electric,Hatchback
+APP110,CUST1110,Ford,Bronco,2024,50000,45000,5000,48,4.20,1033,2026-03-11,approved,Self-employed,730,32,0,Private,Installment,Petrol,SUV
+APP111,CUST1111,Toyota,GR Supra,2024,60000,54000,6000,48,4.50,1243,2026-03-12,approved,Full-time,780,24,0,Private,Installment,Petrol,Sports
+APP112,CUST1112,Honda,NSX,2024,160000,144000,16000,60,6.50,2814,2026-03-12,approved,Full-time,840,16,0,Private,Installment,Petrol,Sports
+APP113,CUST1113,Nissan,GT-R,2024,120000,108000,12000,60,6.30,2109,2026-03-13,approved,Full-time,800,20,0,Private,Installment,Petrol,Sports
+APP114,CUST1114,Mazda,MX-5,2024,32000,28800,3200,48,3.80,650,2026-03-13,approved,Full-time,730,28,0,Private,Installment,Petrol,Sports
+APP115,CUST1115,Hyundai,IONIQ 6,2024,46000,41400,4600,48,4.10,950,2026-03-14,approved,Full-time,760,26,0,Private,EV Finance,Electric,Sedan
+APP116,CUST1116,Kia,EV9,2024,65000,58500,6500,48,4.30,1340,2026-03-14,approved,Full-time,780,24,0,Private,EV Finance,Electric,SUV
+APP117,CUST1117,Subaru,WRX,2024,40000,36000,4000,48,4.00,811,2026-03-15,approved,Full-time,740,30,0,Private,Installment,Petrol,Sedan
+APP118,CUST1118,Suzuki,Jimny,2024,25000,22500,2500,48,3.30,507,2026-03-15,approved,Full-time,710,32,1,Private,Installment,Petrol,SUV
+APP119,CUST1119,Lexus,RX,2024,60000,54000,6000,48,4.50,1243,2026-03-16,approved,Full-time,790,22,0,Private,Installment,Hybrid,SUV
+APP120,CUST1120,Mitsubishi,Pajero,2024,45000,40500,4500,48,4.00,923,2026-03-16,approved,Self-employed,730,30,0,Private,Installment,Diesel,SUV
+APP121,CUST1121,Volvo,S90,2024,55000,49500,5500,48,4.50,1139,2026-03-17,approved,Full-time,770,26,0,Private,Installment,Diesel,Sedan
+APP122,CUST1122,Jaguar,XF,2024,50000,45000,5000,48,4.40,1033,2026-03-17,approved,Full-time,750,28,0,Private,Installment,Diesel,Sedan
+APP123,CUST1123,Land Rover,Range Rover,2024,120000,108000,12000,60,6.00,2097,2026-03-18,approved,Full-time,820,18,0,Private,Installment,Diesel,SUV
+APP124,CUST1124,Polestar,4,2024,70000,63000,7000,48,4.90,1448,2026-03-18,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP125,CUST1125,BYD,Dolphin,2024,35000,31500,3500,48,3.90,710,2026-03-19,approved,Full-time,740,28,0,Private,EV Finance,Electric,Hatchback
+APP126,CUST1126,Renault,Clio,2024,20000,18000,2000,36,3.10,526,2026-03-19,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP127,CUST1127,Peugeot,208,2024,22000,19800,2200,36,3.20,579,2026-03-20,approved,Full-time,710,28,0,Private,Installment,Petrol,Hatchback
+APP128,CUST1128,Citroën,C3,2024,19000,17100,1900,36,3.00,500,2026-03-20,approved,Self-employed,690,32,1,Private,Installment,Petrol,Hatchback
+APP129,CUST1129,Fiat,Panda,2024,16000,14400,1600,36,2.90,420,2026-03-21,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP130,CUST1130,Volkswagen,Up,2024,15000,13500,1500,36,2.80,394,2026-03-21,approved,Full-time,710,28,0,Private,Installment,Petrol,Hatchback
+APP131,CUST1131,Skoda,Octavia,2024,30000,27000,3000,48,3.60,608,2026-03-22,approved,Full-time,720,30,0,Private,Installment,Diesel,Sedan
+APP132,CUST1132,Skoda,Superb,2024,35000,31500,3500,48,3.70,710,2026-03-22,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP133,CUST1133,Skoda,Kodiaq,2024,40000,36000,4000,48,3.80,811,2026-03-23,approved,Full-time,730,30,0,Private,Installment,Diesel,SUV
+APP134,CUST1134,Skoda,Enyaq,2024,48000,43200,4800,48,4.10,991,2026-03-23,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP135,CUST1135,Seat,Leon,2024,28000,25200,2800,48,3.50,566,2026-03-24,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP136,CUST1136,Seat,Ateca,2024,32000,28800,3200,48,3.60,650,2026-03-24,approved,Full-time,720,30,0,Private,Installment,Diesel,SUV
+APP137,CUST1137,Seat,Tarraco,2024,38000,34200,3800,48,3.70,771,2026-03-25,approved,Self-employed,730,30,0,Private,Installment,Diesel,SUV
+APP138,CUST1138,Cupra,Formentor,2024,40000,36000,4000,48,3.80,811,2026-03-25,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP139,CUST1139,Cupra,Born,2024,42000,37800,4200,48,3.90,862,2026-03-26,approved,Full-time,750,26,0,Private,EV Finance,Electric,Hatchback
+APP140,CUST1140,Dacia,Spring,2024,20000,18000,2000,36,3.10,526,2026-03-26,approved,Full-time,700,30,0,Private,EV Finance,Electric,SUV
+APP141,CUST1141,Dacia,Duster,2024,25000,22500,2500,48,3.30,507,2026-03-27,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP142,CUST1142,Dacia,Logan,2024,22000,19800,2200,48,3.20,447,2026-03-27,approved,Self-employed,690,34,0,Private,Installment,Petrol,Sedan
+APP143,CUST1143,Alfa Romeo,Giulia,2024,45000,40500,4500,48,4.30,923,2026-03-28,approved,Full-time,730,28,0,Private,Installment,Petrol,Sedan
+APP144,CUST1144,Alfa Romeo,Stelvio,2024,50000,45000,5000,48,4.40,1033,2026-03-28,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP145,CUST1145,Maserati,Ghibli,2024,90000,81000,9000,48,5.60,1892,2026-03-29,approved,Full-time,800,20,0,Private,Installment,Diesel,Sedan
+APP146,CUST1146,Maserati,Levante,2024,100000,90000,10000,48,5.80,2094,2026-03-29,approved,Self-employed,810,18,0,Private,Installment,Diesel,SUV
+APP147,CUST1147,Lamborghini,Urus,2024,200000,180000,20000,60,7.00,3562,2026-03-30,approved,Full-time,860,12,0,Private,Installment,Petrol,SUV
+APP148,CUST1148,Ferrari,Roma,2024,250000,225000,25000,60,7.50,4500,2026-03-30,approved,Full-time,880,10,0,Private,Installment,Petrol,Coupe
+APP149,CUST1149,Aston Martin,DBX,2024,180000,162000,18000,60,6.80,3191,2026-03-31,approved,Full-time,840,14,0,Private,Installment,Petrol,SUV
+APP150,CUST1150,Bentley,Bentayga,2024,200000,180000,20000,60,7.00,3562,2026-03-31,approved,Full-time,860,12,0,Private,Installment,Diesel,SUV
+APP151,CUST1151,BMW,1 Series,2024,30000,27000,3000,48,3.70,608,2026-04-01,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP152,CUST1152,BMW,2 Series,2024,35000,31500,3500,48,3.80,710,2026-04-01,approved,Full-time,730,30,0,Private,Installment,Petrol,Coupe
+APP153,CUST1153,BMW,4 Series,2024,45000,40500,4500,48,4.20,923,2026-04-02,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP154,CUST1154,BMW,6 Series,2024,65000,58500,6500,48,4.80,1347,2026-04-02,approved,Self-employed,760,26,0,Private,Installment,Diesel,Coupe
+APP155,CUST1155,BMW,i3,2024,40000,36000,4000,48,3.90,811,2026-04-03,approved,Full-time,750,28,0,Private,EV Finance,Electric,Hatchback
+APP156,CUST1156,Mercedes-Benz,A-Class,2024,32000,28800,3200,48,3.60,650,2026-04-03,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP157,CUST1157,Mercedes-Benz,B-Class,2024,35000,31500,3500,48,3.70,710,2026-04-04,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP158,CUST1158,Mercedes-Benz,CLA,2024,40000,36000,4000,48,3.80,811,2026-04-04,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP159,CUST1159,Mercedes-Benz,GLC Coupe,2024,65000,58500,6500,48,4.80,1347,2026-04-05,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP160,CUST1160,Mercedes-Benz,GLE Coupe,2024,80000,72000,8000,48,5.20,1667,2026-04-05,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP161,CUST1161,Audi,A1,2024,26000,23400,2600,48,3.40,526,2026-04-06,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP162,CUST1162,Audi,A5,2024,45000,40500,4500,48,4.20,923,2026-04-06,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP163,CUST1163,Audi,A7,2024,65000,58500,6500,48,4.80,1347,2026-04-07,approved,Self-employed,760,26,0,Private,Installment,Diesel,Sedan
+APP164,CUST1164,Audi,Q2,2024,30000,27000,3000,48,3.60,608,2026-04-07,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP165,CUST1165,Audi,Q8,2024,85000,76500,8500,48,5.40,1769,2026-04-08,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP166,CUST1166,Volkswagen,Polo,2024,20000,18000,2000,36,3.10,526,2026-04-08,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP167,CUST1167,Volkswagen,Taigo,2024,26000,23400,2600,48,3.40,526,2026-04-09,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP168,CUST1168,Volkswagen,Touareg,2024,65000,58500,6500,48,4.80,1347,2026-04-09,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP169,CUST1169,Volkswagen,Multivan,2024,50000,45000,5000,48,4.30,1033,2026-04-10,approved,Full-time,740,28,0,Private,Installment,Diesel,Van
+APP170,CUST1170,Volkswagen,California,2024,55000,49500,5500,48,4.50,1139,2026-04-10,approved,Self-employed,750,26,0,Private,Installment,Diesel,Van
+APP171,CUST1171,Ford,Fiesta,2024,22000,19800,2200,36,3.20,579,2026-04-11,approved,Full-time,710,30,0,Private,Installment,Petrol,Hatchback
+APP172,CUST1172,Ford,Puma,2024,28000,25200,2800,48,3.50,566,2026-04-11,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP173,CUST1173,Ford,Mondeo,2024,35000,31500,3500,48,3.70,710,2026-04-12,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP174,CUST1174,Ford,S-MAX,2024,40000,36000,4000,48,3.80,811,2026-04-12,approved,Full-time,740,28,0,Private,Installment,Diesel,MPV
+APP175,CUST1175,Ford,Galaxy,2024,45000,40500,4500,48,4.00,923,2026-04-13,approved,Full-time,750,26,0,Private,Installment,Diesel,MPV
+APP176,CUST1176,Toyota,Yaris,2024,22000,19800,2200,36,3.20,579,2026-04-13,approved,Full-time,710,30,0,Private,Installment,Hybrid,Hatchback
+APP177,CUST1177,Toyota,Camry,2024,35000,31500,3500,48,3.70,710,2026-04-14,approved,Full-time,730,30,0,Private,Installment,Hybrid,Sedan
+APP178,CUST1178,Toyota,Highlander,2024,50000,45000,5000,48,4.20,1033,2026-04-14,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP179,CUST1179,Toyota,Land Cruiser,2024,70000,63000,7000,48,4.90,1448,2026-04-15,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP180,CUST1180,Toyota,GR Yaris,2024,40000,36000,4000,48,4.00,811,2026-04-15,approved,Self-employed,750,28,0,Private,Installment,Petrol,Hatchback
+APP181,CUST1181,Honda,Jazz,2024,24000,21600,2400,48,3.30,485,2026-04-16,approved,Full-time,710,32,0,Private,Installment,Hybrid,Hatchback
+APP182,CUST1182,Honda,HR-V,2024,32000,28800,3200,48,3.60,650,2026-04-16,approved,Full-time,730,30,0,Private,Installment,Hybrid,SUV
+APP183,CUST1183,Honda,Accord,2024,38000,34200,3800,48,3.80,771,2026-04-17,approved,Full-time,740,28,0,Private,Installment,Hybrid,Sedan
+APP184,CUST1184,Honda,Pilot,2024,48000,43200,4800,48,4.10,991,2026-04-17,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP185,CUST1185,Honda,Passport,2024,44000,39600,4400,48,4.00,894,2026-04-18,approved,Full-time,750,28,0,Private,Installment,Hybrid,SUV
+APP186,CUST1186,Nissan,Leaf,2024,32000,28800,3200,48,3.60,650,2026-04-18,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP187,CUST1187,Nissan,Ariya,2024,46000,41400,4600,48,4.10,950,2026-04-19,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP188,CUST1188,Nissan,Pathfinder,2024,50000,45000,5000,48,4.20,1033,2026-04-19,approved,Self-employed,740,30,0,Private,Installment,Diesel,SUV
+APP189,CUST1189,Nissan,Townstar,2024,30000,27000,3000,48,3.60,608,2026-04-20,approved,Full-time,720,32,0,Commercial,Commercial,Diesel,Van
+APP190,CUST1190,Nissan,Primastar,2024,35000,31500,3500,48,3.70,710,2026-04-20,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP191,CUST1191,Mazda,3,2024,28000,25200,2800,48,3.50,566,2026-04-21,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP192,CUST1192,Mazda,CX-3,2024,30000,27000,3000,48,3.60,608,2026-04-21,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP193,CUST1193,Mazda,CX-30,2024,34000,30600,3400,48,3.70,689,2026-04-22,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP194,CUST1194,Mazda,CX-60,2024,48000,43200,4800,48,4.10,991,2026-04-22,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP195,CUST1195,Mazda,MX-30,2024,36000,32400,3600,48,3.80,729,2026-04-23,approved,Self-employed,750,28,0,Private,EV Finance,Electric,SUV
+APP196,CUST1196,Hyundai,i10,2024,18000,16200,1800,36,3.00,473,2026-04-23,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP197,CUST1197,Hyundai,i20,2024,22000,19800,2200,36,3.20,579,2026-04-24,approved,Full-time,710,28,0,Private,Installment,Petrol,Hatchback
+APP198,CUST1198,Hyundai,i30,2024,26000,23400,2600,48,3.40,526,2026-04-24,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP199,CUST1199,Hyundai,IONIQ,2024,32000,28800,3200,48,3.60,650,2026-04-25,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP200,CUST1200,Hyundai,Santa Fe,2024,45000,40500,4500,48,4.00,923,2026-04-25,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP201,CUST1201,Kia,Rio,2024,20000,18000,2000,36,3.10,526,2026-04-26,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP202,CUST1202,Kia,Ceed,2024,24000,21600,2400,48,3.30,485,2026-04-26,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP203,CUST1203,Kia,Niro,2024,32000,28800,3200,48,3.60,650,2026-04-27,approved,Full-time,730,30,0,Private,EV Finance,Electric,SUV
+APP204,CUST1204,Kia,Sorento,2024,45000,40500,4500,48,4.00,923,2026-04-27,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP205,CUST1205,Kia,Telluride,2024,55000,49500,5500,48,4.40,1139,2026-04-28,approved,Self-employed,760,24,0,Private,Installment,Diesel,SUV
+APP206,CUST1206,Subaru,Impreza,2024,30000,27000,3000,48,3.60,608,2026-04-28,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP207,CUST1207,Subaru,Legacy,2024,35000,31500,3500,48,3.70,710,2026-04-29,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP208,CUST1208,Subaru,Ascent,2024,48000,43200,4800,48,4.10,991,2026-04-29,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP209,CUST1209,Subaru,Crosstrek,2024,32000,28800,3200,48,3.60,650,2026-04-30,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP210,CUST1210,Subaru,BRZ,2024,36000,32400,3600,48,3.80,729,2026-04-30,approved,Full-time,740,28,0,Private,Installment,Petrol,Coupe
+APP211,CUST1211,Suzuki,Ignis,2024,20000,18000,2000,36,3.10,526,2026-05-01,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP212,CUST1212,Suzuki,S-Cross,2024,26000,23400,2600,48,3.40,526,2026-05-01,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP213,CUST1213,Suzuki,Across,2024,36000,32400,3600,48,3.80,729,2026-05-02,approved,Full-time,740,28,0,Private,Installment,Hybrid,SUV
+APP214,CUST1214,Suzuki,Swace,2024,32000,28800,3200,48,3.60,650,2026-05-02,approved,Full-time,730,30,0,Private,Installment,Hybrid,Wagon
+APP215,CUST1215,Lexus,IS,2024,42000,37800,4200,48,4.00,862,2026-05-03,approved,Full-time,750,26,0,Private,Installment,Hybrid,Sedan
+APP216,CUST1216,Lexus,ES,2024,48000,43200,4800,48,4.10,991,2026-05-03,approved,Full-time,760,24,0,Private,Installment,Hybrid,Sedan
+APP217,CUST1217,Lexus,LC,2024,100000,90000,10000,48,5.50,2094,2026-05-04,approved,Full-time,820,18,0,Private,Installment,Hybrid,Coupe
+APP218,CUST1218,Lexus,LS,2024,110000,99000,11000,48,5.60,2312,2026-05-04,approved,Self-employed,830,16,0,Private,Installment,Hybrid,Sedan
+APP219,CUST1219,Mitsubishi,Space Star,2024,20000,18000,2000,36,3.10,526,2026-05-05,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP220,CUST1220,Mitsubishi,L200,2024,35000,31500,3500,48,3.70,710,2026-05-05,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Pickup
+APP221,CUST1221,Volvo,V60,2024,45000,40500,4500,48,4.20,923,2026-05-06,approved,Full-time,750,26,0,Private,Installment,Diesel,Wagon
+APP222,CUST1222,Volvo,V90,2024,52000,46800,5200,48,4.40,1074,2026-05-06,approved,Full-time,760,24,0,Private,Installment,Diesel,Wagon
+APP223,CUST1223,Volvo,XC90,2024,65000,58500,6500,48,4.80,1347,2026-05-07,approved,Full-time,780,22,0,Private,Installment,Diesel,SUV
+APP224,CUST1224,Jaguar,XE,2024,42000,37800,4200,48,4.00,862,2026-05-07,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP225,CUST1225,Jaguar,XJ,2024,65000,58500,6500,48,4.80,1347,2026-05-08,approved,Self-employed,760,26,0,Private,Installment,Diesel,Sedan
+APP226,CUST1226,Jaguar,F-Type,2024,80000,72000,8000,48,5.20,1667,2026-05-08,approved,Full-time,790,22,0,Private,Installment,Petrol,Coupe
+APP227,CUST1227,Land Rover,Ranger Rover Velar,2024,70000,63000,7000,48,4.90,1448,2026-05-09,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP228,CUST1228,Land Rover,Ranger Rover Sport,2024,85000,76500,8500,48,5.40,1769,2026-05-09,approved,Full-time,800,20,0,Private,Installment,Diesel,SUV
+APP229,CUST1229,Land Rover,Ranger Rover Evoque,2024,55000,49500,5500,48,4.50,1139,2026-05-10,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP230,CUST1230,Land Rover,Defender,2024,75000,67500,7500,48,5.00,1554,2026-05-10,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP231,CUST1231,Porsche,718 Cayman,2024,70000,63000,7000,48,4.90,1448,2026-05-11,approved,Full-time,800,20,0,Private,Installment,Petrol,Sports
+APP232,CUST1232,Porsche,911,2024,120000,108000,12000,48,5.80,2490,2026-05-11,approved,Full-time,830,16,0,Private,Installment,Petrol,Sports
+APP233,CUST1233,Porsche,Panamera,2024,100000,90000,10000,48,5.50,2094,2026-05-12,approved,Self-employed,820,18,0,Private,Installment,Petrol,Sedan
+APP234,CUST1234,Porsche,Macan,2024,75000,67500,7500,48,5.00,1554,2026-05-12,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP235,CUST1235,Tesla,Semi,2024,150000,135000,15000,60,6.50,2630,2026-05-13,approved,Full-time,850,15,0,Commercial,Commercial,Electric,Truck
+APP236,CUST1236,Tesla,Cybertruck,2024,95000,85500,9500,60,5.50,1633,2026-05-13,approved,Full-time,790,24,0,Private,EV Finance,Electric,Pickup
+APP237,CUST1237,Tesla,Model X,2024,95000,85500,9500,60,5.60,1639,2026-05-14,approved,Full-time,810,20,0,Private,EV Finance,Electric,SUV
+APP238,CUST1238,Polestar,4,2024,70000,63000,7000,48,4.90,1448,2026-05-14,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP239,CUST1239,BYD,Atto 3,2024,40000,36000,4000,48,4.00,811,2026-05-15,approved,Full-time,750,28,0,Private,EV Finance,Electric,SUV
+APP240,CUST1240,BYD,Seal,2024,42000,37800,4200,48,4.20,862,2026-05-15,approved,Full-time,740,30,0,Private,EV Finance,Electric,Sedan
+APP241,CUST1241,Renault,Talisman,2024,35000,31500,3500,48,3.70,710,2026-05-16,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP242,CUST1242,Renault,Kadjar,2024,32000,28800,3200,48,3.60,650,2026-05-16,approved,Full-time,720,32,0,Private,Installment,Diesel,SUV
+APP243,CUST1243,Renault,Arkana,2024,30000,27000,3000,48,3.50,608,2026-05-17,approved,Full-time,710,34,0,Private,Installment,Petrol,SUV
+APP244,CUST1244,Renault,Trafic,2024,35000,31500,3500,48,3.70,710,2026-05-17,approved,Self-employed,730,30,0,Commercial,Commercial,Diesel,Van
+APP245,CUST1245,Renault,Master,2024,45000,40500,4500,48,4.00,923,2026-05-18,approved,Full-time,740,28,0,Commercial,Commercial,Diesel,Van
+APP246,CUST1246,Peugeot,108,2024,18000,16200,1800,36,3.00,473,2026-05-18,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP247,CUST1247,Peugeot,308,2024,28000,25200,2800,48,3.50,566,2026-05-19,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP248,CUST1248,Peugeot,508,2024,40000,36000,4000,48,3.80,811,2026-05-19,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP249,CUST1249,Peugeot,Partner,2024,30000,27000,3000,48,3.60,608,2026-05-20,approved,Full-time,720,32,0,Commercial,Commercial,Diesel,Van
+APP250,CUST1250,Peugeot,Rifter,2024,32000,28800,3200,48,3.60,650,2026-05-20,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP251,CUST1251,Citroën,C1,2024,17000,15300,1700,36,2.90,447,2026-05-21,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP252,CUST1252,Citroën,C5 Aircross,2024,34000,30600,3400,48,3.70,689,2026-05-21,approved,Full-time,730,30,0,Private,Installment,Diesel,SUV
+APP253,CUST1253,Citroën,SpaceTourer,2024,38000,34200,3800,48,3.80,771,2026-05-22,approved,Full-time,740,28,0,Commercial,Commercial,Diesel,Van
+APP254,CUST1254,Citroën,Jumpy,2024,34000,30600,3400,48,3.70,689,2026-05-22,approved,Full-time,720,30,0,Commercial,Commercial,Diesel,Van
+APP255,CUST1255,Fiat,500L,2024,26000,23400,2600,48,3.40,526,2026-05-23,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP256,CUST1256,Fiat,Tipo,2024,24000,21600,2400,48,3.30,485,2026-05-23,approved,Full-time,720,32,0,Private,Installment,Petrol,Sedan
+APP257,CUST1257,Fiat,Panda,2024,16000,14400,1600,36,2.90,420,2026-05-24,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP258,CUST1258,Fiat,Ducato,2024,40000,36000,4000,48,3.90,811,2026-05-24,approved,Self-employed,740,28,0,Commercial,Commercial,Diesel,Van
+APP259,CUST1259,Fiat,Scudo,2024,36000,32400,3600,48,3.80,729,2026-05-25,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP260,CUST1260,Volvo,C40,2024,50000,45000,5000,48,4.20,1033,2026-05-25,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP261,CUST1261,Volvo,EX30,2024,42000,37800,4200,48,3.90,862,2026-05-26,approved,Full-time,750,28,0,Private,EV Finance,Electric,SUV
+APP262,CUST1262,Volvo,EX90,2024,80000,72000,8000,48,5.20,1667,2026-05-26,approved,Full-time,790,22,0,Private,EV Finance,Electric,SUV
+APP263,CUST1263,Polestar,2,2024,48000,43200,4800,48,4.30,992,2026-05-27,approved,Full-time,770,26,0,Private,EV Finance,Electric,Sedan
+APP264,CUST1264,Polestar,3,2024,75000,67500,7500,48,5.10,1559,2026-05-27,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP265,CUST1265,BYD,Dolphin,2024,35000,31500,3500,48,3.90,710,2026-05-28,approved,Full-time,740,28,0,Private,EV Finance,Electric,Hatchback
+APP266,CUST1266,BYD,Seal,2024,42000,37800,4200,48,4.20,862,2026-05-28,approved,Full-time,750,26,0,Private,EV Finance,Electric,Sedan
+APP267,CUST1267,BYD,Atto 3,2024,40000,36000,4000,48,4.00,811,2026-05-29,approved,Full-time,740,30,0,Private,EV Finance,Electric,SUV
+APP268,CUST1268,BYD,Seagull,2024,25000,22500,2500,48,3.30,507,2026-05-29,approved,Full-time,710,32,0,Private,EV Finance,Electric,Hatchback
+APP269,CUST1269,Renault,Zoe,2024,28000,25200,2800,48,3.50,566,2026-05-30,approved,Full-time,720,32,0,Private,EV Finance,Electric,Hatchback
+APP270,CUST1270,Renault,Scenic,2024,35000,31500,3500,48,3.70,710,2026-05-30,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP271,CUST1271,Peugeot,e-208,2024,30000,27000,3000,48,3.60,608,2026-05-31,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP272,CUST1272,Peugeot,e-2008,2024,34000,30600,3400,48,3.70,689,2026-05-31,approved,Full-time,740,28,0,Private,EV Finance,Electric,SUV
+APP273,CUST1273,Citroën,ë-C4,2024,32000,28800,3200,48,3.60,650,2026-06-01,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP274,CUST1274,Citroën,ë-C4 X,2024,36000,32400,3600,48,3.80,729,2026-06-01,approved,Full-time,740,28,0,Private,EV Finance,Electric,Sedan
+APP275,CUST1275,Fiat,500e,2024,30000,27000,3000,48,3.60,608,2026-06-02,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP276,CUST1276,Fiat,E-Ulysse,2024,45000,40500,4500,48,4.00,923,2026-06-02,approved,Self-employed,750,26,0,Private,EV Finance,Electric,Van
+APP277,CUST1277,Skoda,Octavia,2024,30000,27000,3000,48,3.60,608,2026-06-03,approved,Full-time,720,30,0,Private,Installment,Diesel,Sedan
+APP278,CUST1278,Skoda,Superb,2024,35000,31500,3500,48,3.70,710,2026-06-03,approved,Full-time,730,28,0,Private,Installment,Diesel,Sedan
+APP279,CUST1279,Skoda,Kodiaq,2024,40000,36000,4000,48,3.80,811,2026-06-04,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP280,CUST1280,Skoda,Enyaq,2024,48000,43200,4800,48,4.10,991,2026-06-04,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP281,CUST1281,Seat,Leon,2024,28000,25200,2800,48,3.50,566,2026-06-05,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP282,CUST1282,Seat,Ateca,2024,32000,28800,3200,48,3.60,650,2026-06-05,approved,Full-time,730,30,0,Private,Installment,Diesel,SUV
+APP283,CUST1283,Seat,Tarraco,2024,38000,34200,3800,48,3.70,771,2026-06-06,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP284,CUST1284,Cupra,Formentor,2024,40000,36000,4000,48,3.80,811,2026-06-06,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP285,CUST1285,Cupra,Born,2024,42000,37800,4200,48,3.90,862,2026-06-07,approved,Full-time,760,26,0,Private,EV Finance,Electric,Hatchback
+APP286,CUST1286,Dacia,Spring,2024,20000,18000,2000,36,3.10,526,2026-06-07,approved,Full-time,700,30,0,Private,EV Finance,Electric,SUV
+APP287,CUST1287,Dacia,Duster,2024,25000,22500,2500,48,3.30,507,2026-06-08,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP288,CUST1288,Dacia,Logan,2024,22000,19800,2200,48,3.20,447,2026-06-08,approved,Self-employed,690,34,0,Private,Installment,Petrol,Sedan
+APP289,CUST1289,Alfa Romeo,Giulia,2024,45000,40500,4500,48,4.30,923,2026-06-09,approved,Full-time,730,28,0,Private,Installment,Petrol,Sedan
+APP290,CUST1290,Alfa Romeo,Stelvio,2024,50000,45000,5000,48,4.40,1033,2026-06-09,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP291,CUST1291,Maserati,Ghibli,2024,90000,81000,9000,48,5.60,1892,2026-06-10,approved,Full-time,800,20,0,Private,Installment,Diesel,Sedan
+APP292,CUST1292,Maserati,Levante,2024,100000,90000,10000,48,5.80,2094,2026-06-10,approved,Self-employed,810,18,0,Private,Installment,Diesel,SUV
+APP293,CUST1293,Lamborghini,Urus,2024,200000,180000,20000,60,7.00,3562,2026-06-11,approved,Full-time,860,12,0,Private,Installment,Petrol,SUV
+APP294,CUST1294,Ferrari,Roma,2024,250000,225000,25000,60,7.50,4500,2026-06-11,approved,Full-time,880,10,0,Private,Installment,Petrol,Coupe
+APP295,CUST1295,Aston Martin,DBX,2024,180000,162000,18000,60,6.80,3191,2026-06-12,approved,Full-time,840,14,0,Private,Installment,Petrol,SUV
+APP296,CUST1296,Bentley,Bentayga,2024,200000,180000,20000,60,7.00,3562,2026-06-12,approved,Full-time,860,12,0,Private,Installment,Diesel,SUV
+APP297,CUST1297,BMW,1 Series,2024,30000,27000,3000,48,3.70,608,2026-06-13,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP298,CUST1298,BMW,2 Series,2024,35000,31500,3500,48,3.80,710,2026-06-13,approved,Full-time,730,30,0,Private,Installment,Petrol,Coupe
+APP299,CUST1299,BMW,4 Series,2024,45000,40500,4500,48,4.20,923,2026-06-14,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP300,CUST1300,BMW,6 Series,2024,65000,58500,6500,48,4.80,1347,2026-06-14,approved,Self-employed,760,26,0,Private,Installment,Diesel,Coupe
+APP301,CUST1301,BMW,i3,2024,40000,36000,4000,48,3.90,811,2026-06-15,approved,Full-time,750,28,0,Private,EV Finance,Electric,Hatchback
+APP302,CUST1302,Mercedes-Benz,A-Class,2024,32000,28800,3200,48,3.60,650,2026-06-15,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP303,CUST1303,Mercedes-Benz,B-Class,2024,35000,31500,3500,48,3.70,710,2026-06-16,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP304,CUST1304,Mercedes-Benz,CLA,2024,40000,36000,4000,48,3.80,811,2026-06-16,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP305,CUST1305,Mercedes-Benz,GLC Coupe,2024,65000,58500,6500,48,4.80,1347,2026-06-17,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP306,CUST1306,Mercedes-Benz,GLE Coupe,2024,80000,72000,8000,48,5.20,1667,2026-06-17,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP307,CUST1307,Audi,A1,2024,26000,23400,2600,48,3.40,526,2026-06-18,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP308,CUST1308,Audi,A5,2024,45000,40500,4500,48,4.20,923,2026-06-18,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP309,CUST1309,Audi,A7,2024,65000,58500,6500,48,4.80,1347,2026-06-19,approved,Self-employed,760,26,0,Private,Installment,Diesel,Sedan
+APP310,CUST1310,Audi,Q2,2024,30000,27000,3000,48,3.60,608,2026-06-19,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP311,CUST1311,Audi,Q8,2024,85000,76500,8500,48,5.40,1769,2026-06-20,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP312,CUST1312,Volkswagen,Polo,2024,20000,18000,2000,36,3.10,526,2026-06-20,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP313,CUST1313,Volkswagen,Taigo,2024,26000,23400,2600,48,3.40,526,2026-06-21,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP314,CUST1314,Volkswagen,Touareg,2024,65000,58500,6500,48,4.80,1347,2026-06-21,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP315,CUST1315,Volkswagen,Multivan,2024,50000,45000,5000,48,4.30,1033,2026-06-22,approved,Full-time,740,28,0,Private,Installment,Diesel,Van
+APP316,CUST1316,Volkswagen,California,2024,55000,49500,5500,48,4.50,1139,2026-06-22,approved,Self-employed,750,26,0,Private,Installment,Diesel,Van
+APP317,CUST1317,Ford,Fiesta,2024,22000,19800,2200,36,3.20,579,2026-06-23,approved,Full-time,710,30,0,Private,Installment,Petrol,Hatchback
+APP318,CUST1318,Ford,Puma,2024,28000,25200,2800,48,3.50,566,2026-06-23,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP319,CUST1319,Ford,Mondeo,2024,35000,31500,3500,48,3.70,710,2026-06-24,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP320,CUST1320,Ford,S-MAX,2024,40000,36000,4000,48,3.80,811,2026-06-24,approved,Full-time,740,28,0,Private,Installment,Diesel,MPV
+APP321,CUST1321,Ford,Galaxy,2024,45000,40500,4500,48,4.00,923,2026-06-25,approved,Full-time,750,26,0,Private,Installment,Diesel,MPV
+APP322,CUST1322,Toyota,Yaris,2024,22000,19800,2200,36,3.20,579,2026-06-25,approved,Full-time,710,30,0,Private,Installment,Hybrid,Hatchback
+APP323,CUST1323,Toyota,Camry,2024,35000,31500,3500,48,3.70,710,2026-06-26,approved,Full-time,730,30,0,Private,Installment,Hybrid,Sedan
+APP324,CUST1324,Toyota,Highlander,2024,50000,45000,5000,48,4.20,1033,2026-06-26,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP325,CUST1325,Toyota,Land Cruiser,2024,70000,63000,7000,48,4.90,1448,2026-06-27,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP326,CUST1326,Toyota,GR Yaris,2024,40000,36000,4000,48,4.00,811,2026-06-27,approved,Self-employed,750,28,0,Private,Installment,Petrol,Hatchback
+APP327,CUST1327,Honda,Jazz,2024,24000,21600,2400,48,3.30,485,2026-06-28,approved,Full-time,710,32,0,Private,Installment,Hybrid,Hatchback
+APP328,CUST1328,Honda,HR-V,2024,32000,28800,3200,48,3.60,650,2026-06-28,approved,Full-time,730,30,0,Private,Installment,Hybrid,SUV
+APP329,CUST1329,Honda,Accord,2024,38000,34200,3800,48,3.80,771,2026-06-29,approved,Full-time,740,28,0,Private,Installment,Hybrid,Sedan
+APP330,CUST1330,Honda,Pilot,2024,48000,43200,4800,48,4.10,991,2026-06-29,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP331,CUST1331,Honda,Passport,2024,44000,39600,4400,48,4.00,894,2026-06-30,approved,Full-time,750,28,0,Private,Installment,Hybrid,SUV
+APP332,CUST1332,Nissan,Leaf,2024,32000,28800,3200,48,3.60,650,2026-06-30,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP333,CUST1333,Nissan,Ariya,2024,46000,41400,4600,48,4.10,950,2026-07-01,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP334,CUST1334,Nissan,Pathfinder,2024,50000,45000,5000,48,4.20,1033,2026-07-01,approved,Self-employed,740,30,0,Private,Installment,Diesel,SUV
+APP335,CUST1335,Nissan,Townstar,2024,30000,27000,3000,48,3.60,608,2026-07-02,approved,Full-time,720,32,0,Commercial,Commercial,Diesel,Van
+APP336,CUST1336,Nissan,Primastar,2024,35000,31500,3500,48,3.70,710,2026-07-02,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP337,CUST1337,Mazda,3,2024,28000,25200,2800,48,3.50,566,2026-07-03,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP338,CUST1338,Mazda,CX-3,2024,30000,27000,3000,48,3.60,608,2026-07-03,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP339,CUST1339,Mazda,CX-30,2024,34000,30600,3400,48,3.70,689,2026-07-04,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP340,CUST1340,Mazda,CX-60,2024,48000,43200,4800,48,4.10,991,2026-07-04,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP341,CUST1341,Mazda,MX-30,2024,36000,32400,3600,48,3.80,729,2026-07-05,approved,Self-employed,750,28,0,Private,EV Finance,Electric,SUV
+APP342,CUST1342,Hyundai,i10,2024,18000,16200,1800,36,3.00,473,2026-07-05,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP343,CUST1343,Hyundai,i20,2024,22000,19800,2200,36,3.20,579,2026-07-06,approved,Full-time,710,28,0,Private,Installment,Petrol,Hatchback
+APP344,CUST1344,Hyundai,i30,2024,26000,23400,2600,48,3.40,526,2026-07-06,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP345,CUST1345,Hyundai,IONIQ,2024,32000,28800,3200,48,3.60,650,2026-07-07,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP346,CUST1346,Hyundai,Santa Fe,2024,45000,40500,4500,48,4.00,923,2026-07-07,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP347,CUST1347,Kia,Rio,2024,20000,18000,2000,36,3.10,526,2026-07-08,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP348,CUST1348,Kia,Ceed,2024,24000,21600,2400,48,3.30,485,2026-07-08,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP349,CUST1349,Kia,Niro,2024,32000,28800,3200,48,3.60,650,2026-07-09,approved,Full-time,730,30,0,Private,EV Finance,Electric,SUV
+APP350,CUST1350,Kia,Sorento,2024,45000,40500,4500,48,4.00,923,2026-07-09,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP351,CUST1351,Kia,Telluride,2024,55000,49500,5500,48,4.40,1139,2026-07-10,approved,Self-employed,760,24,0,Private,Installment,Diesel,SUV
+APP352,CUST1352,Subaru,Impreza,2024,30000,27000,3000,48,3.60,608,2026-07-10,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP353,CUST1353,Subaru,Legacy,2024,35000,31500,3500,48,3.70,710,2026-07-11,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP354,CUST1354,Subaru,Ascent,2024,48000,43200,4800,48,4.10,991,2026-07-11,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP355,CUST1355,Subaru,Crosstrek,2024,32000,28800,3200,48,3.60,650,2026-07-12,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP356,CUST1356,Subaru,BRZ,2024,36000,32400,3600,48,3.80,729,2026-07-12,approved,Full-time,740,28,0,Private,Installment,Petrol,Coupe
+APP357,CUST1357,Suzuki,Ignis,2024,20000,18000,2000,36,3.10,526,2026-07-13,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP358,CUST1358,Suzuki,S-Cross,2024,26000,23400,2600,48,3.40,526,2026-07-13,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP359,CUST1359,Suzuki,Across,2024,36000,32400,3600,48,3.80,729,2026-07-14,approved,Full-time,740,28,0,Private,Installment,Hybrid,SUV
+APP360,CUST1360,Suzuki,Swace,2024,32000,28800,3200,48,3.60,650,2026-07-14,approved,Full-time,730,30,0,Private,Installment,Hybrid,Wagon
+APP361,CUST1361,Lexus,IS,2024,42000,37800,4200,48,4.00,862,2026-07-15,approved,Full-time,750,26,0,Private,Installment,Hybrid,Sedan
+APP362,CUST1362,Lexus,ES,2024,48000,43200,4800,48,4.10,991,2026-07-15,approved,Full-time,760,24,0,Private,Installment,Hybrid,Sedan
+APP363,CUST1363,Lexus,LC,2024,100000,90000,10000,48,5.50,2094,2026-07-16,approved,Full-time,820,18,0,Private,Installment,Hybrid,Coupe
+APP364,CUST1364,Lexus,LS,2024,110000,99000,11000,48,5.60,2312,2026-07-16,approved,Self-employed,830,16,0,Private,Installment,Hybrid,Sedan
+APP365,CUST1365,Mitsubishi,Space Star,2024,20000,18000,2000,36,3.10,526,2026-07-17,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP366,CUST1366,Mitsubishi,L200,2024,35000,31500,3500,48,3.70,710,2026-07-17,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Pickup
+APP367,CUST1367,Volvo,V60,2024,45000,40500,4500,48,4.20,923,2026-07-18,approved,Full-time,750,26,0,Private,Installment,Diesel,Wagon
+APP368,CUST1368,Volvo,V90,2024,52000,46800,5200,48,4.40,1074,2026-07-18,approved,Full-time,760,24,0,Private,Installment,Diesel,Wagon
+APP369,CUST1369,Volvo,XC90,2024,65000,58500,6500,48,4.80,1347,2026-07-19,approved,Full-time,780,22,0,Private,Installment,Diesel,SUV
+APP370,CUST1370,Jaguar,XE,2024,42000,37800,4200,48,4.00,862,2026-07-19,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP371,CUST1371,Jaguar,XJ,2024,65000,58500,6500,48,4.80,1347,2026-07-20,approved,Self-employed,760,26,0,Private,Installment,Diesel,Sedan
+APP372,CUST1372,Jaguar,F-Type,2024,80000,72000,8000,48,5.20,1667,2026-07-20,approved,Full-time,790,22,0,Private,Installment,Petrol,Coupe
+APP373,CUST1373,Land Rover,Ranger Rover Velar,2024,70000,63000,7000,48,4.90,1448,2026-07-21,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP374,CUST1374,Land Rover,Ranger Rover Sport,2024,85000,76500,8500,48,5.40,1769,2026-07-21,approved,Full-time,800,20,0,Private,Installment,Diesel,SUV
+APP375,CUST1375,Land Rover,Ranger Rover Evoque,2024,55000,49500,5500,48,4.50,1139,2026-07-22,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP376,CUST1376,Land Rover,Defender,2024,75000,67500,7500,48,5.00,1554,2026-07-22,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP377,CUST1377,Porsche,718 Cayman,2024,70000,63000,7000,48,4.90,1448,2026-07-23,approved,Full-time,800,20,0,Private,Installment,Petrol,Sports
+APP378,CUST1378,Porsche,911,2024,120000,108000,12000,48,5.80,2490,2026-07-23,approved,Full-time,830,16,0,Private,Installment,Petrol,Sports
+APP379,CUST1379,Porsche,Panamera,2024,100000,90000,10000,48,5.50,2094,2026-07-24,approved,Self-employed,820,18,0,Private,Installment,Petrol,Sedan
+APP380,CUST1380,Porsche,Macan,2024,75000,67500,7500,48,5.00,1554,2026-07-24,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP381,CUST1381,Tesla,Semi,2024,150000,135000,15000,60,6.50,2630,2026-07-25,approved,Full-time,850,15,0,Commercial,Commercial,Electric,Truck
+APP382,CUST1382,Tesla,Cybertruck,2024,95000,85500,9500,60,5.50,1633,2026-07-25,approved,Full-time,790,24,0,Private,EV Finance,Electric,Pickup
+APP383,CUST1383,Tesla,Model X,2024,95000,85500,9500,60,5.60,1639,2026-07-26,approved,Full-time,810,20,0,Private,EV Finance,Electric,SUV
+APP384,CUST1384,Polestar,4,2024,70000,63000,7000,48,4.90,1448,2026-07-26,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP385,CUST1385,BYD,Atto 3,2024,40000,36000,4000,48,4.00,811,2026-07-27,approved,Full-time,750,28,0,Private,EV Finance,Electric,SUV
+APP386,CUST1386,BYD,Seal,2024,42000,37800,4200,48,4.20,862,2026-07-27,approved,Full-time,740,30,0,Private,EV Finance,Electric,Sedan
+APP387,CUST1387,Renault,Talisman,2024,35000,31500,3500,48,3.70,710,2026-07-28,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP388,CUST1388,Renault,Kadjar,2024,32000,28800,3200,48,3.60,650,2026-07-28,approved,Full-time,720,32,0,Private,Installment,Diesel,SUV
+APP389,CUST1389,Renault,Arkana,2024,30000,27000,3000,48,3.50,608,2026-07-29,approved,Full-time,710,34,0,Private,Installment,Petrol,SUV
+APP390,CUST1390,Renault,Trafic,2024,35000,31500,3500,48,3.70,710,2026-07-29,approved,Self-employed,730,30,0,Commercial,Commercial,Diesel,Van
+APP391,CUST1391,Renault,Master,2024,45000,40500,4500,48,4.00,923,2026-07-30,approved,Full-time,740,28,0,Commercial,Commercial,Diesel,Van
+APP392,CUST1392,Peugeot,108,2024,18000,16200,1800,36,3.00,473,2026-07-30,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP393,CUST1393,Peugeot,308,2024,28000,25200,2800,48,3.50,566,2026-07-31,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP394,CUST1394,Peugeot,508,2024,40000,36000,4000,48,3.80,811,2026-07-31,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP395,CUST1395,Peugeot,Partner,2024,30000,27000,3000,48,3.60,608,2026-08-01,approved,Full-time,720,32,0,Commercial,Commercial,Diesel,Van
+APP396,CUST1396,Peugeot,Rifter,2024,32000,28800,3200,48,3.60,650,2026-08-01,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP397,CUST1397,Citroën,C1,2024,17000,15300,1700,36,2.90,447,2026-08-02,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP398,CUST1398,Citroën,C5 Aircross,2024,34000,30600,3400,48,3.70,689,2026-08-02,approved,Full-time,730,30,0,Private,Installment,Diesel,SUV
+APP399,CUST1399,Citroën,SpaceTourer,2024,38000,34200,3800,48,3.80,771,2026-08-03,approved,Full-time,740,28,0,Commercial,Commercial,Diesel,Van
+APP400,CUST1400,Citroën,Jumpy,2024,34000,30600,3400,48,3.70,689,2026-08-03,approved,Full-time,720,30,0,Commercial,Commercial,Diesel,Van
+APP401,CUST1401,Fiat,500L,2024,26000,23400,2600,48,3.40,526,2026-08-04,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP402,CUST1402,Fiat,Tipo,2024,24000,21600,2400,48,3.30,485,2026-08-04,approved,Full-time,720,32,0,Private,Installment,Petrol,Sedan
+APP403,CUST1403,Fiat,Panda,2024,16000,14400,1600,36,2.90,420,2026-08-05,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP404,CUST1404,Fiat,Ducato,2024,40000,36000,4000,48,3.90,811,2026-08-05,approved,Self-employed,740,28,0,Commercial,Commercial,Diesel,Van
+APP405,CUST1405,Fiat,Scudo,2024,36000,32400,3600,48,3.80,729,2026-08-06,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP406,CUST1406,Volvo,C40,2024,50000,45000,5000,48,4.20,1033,2026-08-06,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP407,CUST1407,Volvo,EX30,2024,42000,37800,4200,48,3.90,862,2026-08-07,approved,Full-time,750,28,0,Private,EV Finance,Electric,SUV
+APP408,CUST1408,Volvo,EX90,2024,80000,72000,8000,48,5.20,1667,2026-08-07,approved,Full-time,790,22,0,Private,EV Finance,Electric,SUV
+APP409,CUST1409,Polestar,2,2024,48000,43200,4800,48,4.30,992,2026-08-08,approved,Full-time,770,26,0,Private,EV Finance,Electric,Sedan
+APP410,CUST1410,Polestar,3,2024,75000,67500,7500,48,5.10,1559,2026-08-08,approved,Full-time,790,24,0,Private,EV Finance,Electric,SUV
+APP411,CUST1411,BYD,Dolphin,2024,35000,31500,3500,48,3.90,710,2026-08-09,approved,Full-time,740,28,0,Private,EV Finance,Electric,Hatchback
+APP412,CUST1412,BYD,Seal,2024,42000,37800,4200,48,4.20,862,2026-08-09,approved,Full-time,750,26,0,Private,EV Finance,Electric,Sedan
+APP413,CUST1413,BYD,Atto 3,2024,40000,36000,4000,48,4.00,811,2026-08-10,approved,Full-time,740,30,0,Private,EV Finance,Electric,SUV
+APP414,CUST1414,BYD,Seagull,2024,25000,22500,2500,48,3.30,507,2026-08-10,approved,Full-time,710,32,0,Private,EV Finance,Electric,Hatchback
+APP415,CUST1415,Renault,Zoe,2024,28000,25200,2800,48,3.50,566,2026-08-11,approved,Full-time,720,32,0,Private,EV Finance,Electric,Hatchback
+APP416,CUST1416,Renault,Scenic,2024,35000,31500,3500,48,3.70,710,2026-08-11,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP417,CUST1417,Peugeot,e-208,2024,30000,27000,3000,48,3.60,608,2026-08-12,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP418,CUST1418,Peugeot,e-2008,2024,34000,30600,3400,48,3.70,689,2026-08-12,approved,Full-time,740,28,0,Private,EV Finance,Electric,SUV
+APP419,CUST1419,Citroën,ë-C4,2024,32000,28800,3200,48,3.60,650,2026-08-13,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP420,CUST1420,Citroën,ë-C4 X,2024,36000,32400,3600,48,3.80,729,2026-08-13,approved,Full-time,740,28,0,Private,EV Finance,Electric,Sedan
+APP421,CUST1421,Fiat,500e,2024,30000,27000,3000,48,3.60,608,2026-08-14,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP422,CUST1422,Fiat,E-Ulysse,2024,45000,40500,4500,48,4.00,923,2026-08-14,approved,Self-employed,750,26,0,Private,EV Finance,Electric,Van
+APP423,CUST1423,Skoda,Octavia,2024,30000,27000,3000,48,3.60,608,2026-08-15,approved,Full-time,720,30,0,Private,Installment,Diesel,Sedan
+APP424,CUST1424,Skoda,Superb,2024,35000,31500,3500,48,3.70,710,2026-08-15,approved,Full-time,730,28,0,Private,Installment,Diesel,Sedan
+APP425,CUST1425,Skoda,Kodiaq,2024,40000,36000,4000,48,3.80,811,2026-08-16,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP426,CUST1426,Skoda,Enyaq,2024,48000,43200,4800,48,4.10,991,2026-08-16,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP427,CUST1427,Seat,Leon,2024,28000,25200,2800,48,3.50,566,2026-08-17,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP428,CUST1428,Seat,Ateca,2024,32000,28800,3200,48,3.60,650,2026-08-17,approved,Full-time,730,30,0,Private,Installment,Diesel,SUV
+APP429,CUST1429,Seat,Tarraco,2024,38000,34200,3800,48,3.70,771,2026-08-18,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP430,CUST1430,Cupra,Formentor,2024,40000,36000,4000,48,3.80,811,2026-08-18,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP431,CUST1431,Cupra,Born,2024,42000,37800,4200,48,3.90,862,2026-08-19,approved,Full-time,760,26,0,Private,EV Finance,Electric,Hatchback
+APP432,CUST1432,Dacia,Spring,2024,20000,18000,2000,36,3.10,526,2026-08-19,approved,Full-time,700,30,0,Private,EV Finance,Electric,SUV
+APP433,CUST1433,Dacia,Duster,2024,25000,22500,2500,48,3.30,507,2026-08-20,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP434,CUST1434,Dacia,Logan,2024,22000,19800,2200,48,3.20,447,2026-08-20,approved,Self-employed,690,34,0,Private,Installment,Petrol,Sedan
+APP435,CUST1435,Alfa Romeo,Giulia,2024,45000,40500,4500,48,4.30,923,2026-08-21,approved,Full-time,730,28,0,Private,Installment,Petrol,Sedan
+APP436,CUST1436,Alfa Romeo,Stelvio,2024,50000,45000,5000,48,4.40,1033,2026-08-21,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP437,CUST1437,Maserati,Ghibli,2024,90000,81000,9000,48,5.60,1892,2026-08-22,approved,Full-time,800,20,0,Private,Installment,Diesel,Sedan
+APP438,CUST1438,Maserati,Levante,2024,100000,90000,10000,48,5.80,2094,2026-08-22,approved,Self-employed,810,18,0,Private,Installment,Diesel,SUV
+APP439,CUST1439,Lamborghini,Urus,2024,200000,180000,20000,60,7.00,3562,2026-08-23,approved,Full-time,860,12,0,Private,Installment,Petrol,SUV
+APP440,CUST1440,Ferrari,Roma,2024,250000,225000,25000,60,7.50,4500,2026-08-23,approved,Full-time,880,10,0,Private,Installment,Petrol,Coupe
+APP441,CUST1441,Aston Martin,DBX,2024,180000,162000,18000,60,6.80,3191,2026-08-24,approved,Full-time,840,14,0,Private,Installment,Petrol,SUV
+APP442,CUST1442,Bentley,Bentayga,2024,200000,180000,20000,60,7.00,3562,2026-08-24,approved,Full-time,860,12,0,Private,Installment,Diesel,SUV
+APP443,CUST1443,BMW,1 Series,2024,30000,27000,3000,48,3.70,608,2026-08-25,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP444,CUST1444,BMW,2 Series,2024,35000,31500,3500,48,3.80,710,2026-08-25,approved,Full-time,730,30,0,Private,Installment,Petrol,Coupe
+APP445,CUST1445,BMW,4 Series,2024,45000,40500,4500,48,4.20,923,2026-08-26,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP446,CUST1446,BMW,6 Series,2024,65000,58500,6500,48,4.80,1347,2026-08-26,approved,Self-employed,760,26,0,Private,Installment,Diesel,Coupe
+APP447,CUST1447,BMW,i3,2024,40000,36000,4000,48,3.90,811,2026-08-27,approved,Full-time,750,28,0,Private,EV Finance,Electric,Hatchback
+APP448,CUST1448,Mercedes-Benz,A-Class,2024,32000,28800,3200,48,3.60,650,2026-08-27,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP449,CUST1449,Mercedes-Benz,B-Class,2024,35000,31500,3500,48,3.70,710,2026-08-28,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP450,CUST1450,Mercedes-Benz,CLA,2024,40000,36000,4000,48,3.80,811,2026-08-28,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP451,CUST1451,Mercedes-Benz,GLC Coupe,2024,65000,58500,6500,48,4.80,1347,2026-08-29,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP452,CUST1452,Mercedes-Benz,GLE Coupe,2024,80000,72000,8000,48,5.20,1667,2026-08-29,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP453,CUST1453,Audi,A1,2024,26000,23400,2600,48,3.40,526,2026-08-30,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP454,CUST1454,Audi,A5,2024,45000,40500,4500,48,4.20,923,2026-08-30,approved,Full-time,740,28,0,Private,Installment,Diesel,Coupe
+APP455,CUST1455,Audi,A7,2024,65000,58500,6500,48,4.80,1347,2026-08-31,approved,Self-employed,760,26,0,Private,Installment,Diesel,Sedan
+APP456,CUST1456,Audi,Q2,2024,30000,27000,3000,48,3.60,608,2026-08-31,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP457,CUST1457,Audi,Q8,2024,85000,76500,8500,48,5.40,1769,2026-09-01,approved,Full-time,790,22,0,Private,Installment,Diesel,SUV
+APP458,CUST1458,Volkswagen,Polo,2024,20000,18000,2000,36,3.10,526,2026-09-01,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP459,CUST1459,Volkswagen,Taigo,2024,26000,23400,2600,48,3.40,526,2026-09-02,approved,Full-time,710,32,0,Private,Installment,Petrol,SUV
+APP460,CUST1460,Volkswagen,Touareg,2024,65000,58500,6500,48,4.80,1347,2026-09-02,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP461,CUST1461,Volkswagen,Multivan,2024,50000,45000,5000,48,4.30,1033,2026-09-03,approved,Full-time,740,28,0,Private,Installment,Diesel,Van
+APP462,CUST1462,Volkswagen,California,2024,55000,49500,5500,48,4.50,1139,2026-09-03,approved,Self-employed,750,26,0,Private,Installment,Diesel,Van
+APP463,CUST1463,Ford,Fiesta,2024,22000,19800,2200,36,3.20,579,2026-09-04,approved,Full-time,710,30,0,Private,Installment,Petrol,Hatchback
+APP464,CUST1464,Ford,Puma,2024,28000,25200,2800,48,3.50,566,2026-09-04,approved,Full-time,720,32,0,Private,Installment,Petrol,SUV
+APP465,CUST1465,Ford,Mondeo,2024,35000,31500,3500,48,3.70,710,2026-09-05,approved,Full-time,730,30,0,Private,Installment,Diesel,Sedan
+APP466,CUST1466,Ford,S-MAX,2024,40000,36000,4000,48,3.80,811,2026-09-05,approved,Full-time,740,28,0,Private,Installment,Diesel,MPV
+APP467,CUST1467,Ford,Galaxy,2024,45000,40500,4500,48,4.00,923,2026-09-06,approved,Full-time,750,26,0,Private,Installment,Diesel,MPV
+APP468,CUST1468,Toyota,Yaris,2024,22000,19800,2200,36,3.20,579,2026-09-06,approved,Full-time,710,30,0,Private,Installment,Hybrid,Hatchback
+APP469,CUST1469,Toyota,Camry,2024,35000,31500,3500,48,3.70,710,2026-09-07,approved,Full-time,730,30,0,Private,Installment,Hybrid,Sedan
+APP470,CUST1470,Toyota,Highlander,2024,50000,45000,5000,48,4.20,1033,2026-09-07,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP471,CUST1471,Toyota,Land Cruiser,2024,70000,63000,7000,48,4.90,1448,2026-09-08,approved,Full-time,780,24,0,Private,Installment,Diesel,SUV
+APP472,CUST1472,Toyota,GR Yaris,2024,40000,36000,4000,48,4.00,811,2026-09-08,approved,Self-employed,750,28,0,Private,Installment,Petrol,Hatchback
+APP473,CUST1473,Honda,Jazz,2024,24000,21600,2400,48,3.30,485,2026-09-09,approved,Full-time,710,32,0,Private,Installment,Hybrid,Hatchback
+APP474,CUST1474,Honda,HR-V,2024,32000,28800,3200,48,3.60,650,2026-09-09,approved,Full-time,730,30,0,Private,Installment,Hybrid,SUV
+APP475,CUST1475,Honda,Accord,2024,38000,34200,3800,48,3.80,771,2026-09-10,approved,Full-time,740,28,0,Private,Installment,Hybrid,Sedan
+APP476,CUST1476,Honda,Pilot,2024,48000,43200,4800,48,4.10,991,2026-09-10,approved,Full-time,760,26,0,Private,Installment,Hybrid,SUV
+APP477,CUST1477,Honda,Passport,2024,44000,39600,4400,48,4.00,894,2026-09-11,approved,Full-time,750,28,0,Private,Installment,Hybrid,SUV
+APP478,CUST1478,Nissan,Leaf,2024,32000,28800,3200,48,3.60,650,2026-09-11,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP479,CUST1479,Nissan,Ariya,2024,46000,41400,4600,48,4.10,950,2026-09-12,approved,Full-time,760,26,0,Private,EV Finance,Electric,SUV
+APP480,CUST1480,Nissan,Pathfinder,2024,50000,45000,5000,48,4.20,1033,2026-09-12,approved,Self-employed,740,30,0,Private,Installment,Diesel,SUV
+APP481,CUST1481,Nissan,Townstar,2024,30000,27000,3000,48,3.60,608,2026-09-13,approved,Full-time,720,32,0,Commercial,Commercial,Diesel,Van
+APP482,CUST1482,Nissan,Primastar,2024,35000,31500,3500,48,3.70,710,2026-09-13,approved,Full-time,730,30,0,Commercial,Commercial,Diesel,Van
+APP483,CUST1483,Mazda,3,2024,28000,25200,2800,48,3.50,566,2026-09-14,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP484,CUST1484,Mazda,CX-3,2024,30000,27000,3000,48,3.60,608,2026-09-14,approved,Full-time,730,30,0,Private,Installment,Petrol,SUV
+APP485,CUST1485,Mazda,CX-30,2024,34000,30600,3400,48,3.70,689,2026-09-15,approved,Full-time,740,28,0,Private,Installment,Diesel,SUV
+APP486,CUST1486,Mazda,CX-60,2024,48000,43200,4800,48,4.10,991,2026-09-15,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
+APP487,CUST1487,Mazda,MX-30,2024,36000,32400,3600,48,3.80,729,2026-09-16,approved,Self-employed,750,28,0,Private,EV Finance,Electric,SUV
+APP488,CUST1488,Hyundai,i10,2024,18000,16200,1800,36,3.00,473,2026-09-16,approved,Full-time,690,30,0,Private,Installment,Petrol,Hatchback
+APP489,CUST1489,Hyundai,i20,2024,22000,19800,2200,36,3.20,579,2026-09-17,approved,Full-time,710,28,0,Private,Installment,Petrol,Hatchback
+APP490,CUST1490,Hyundai,i30,2024,26000,23400,2600,48,3.40,526,2026-09-17,approved,Full-time,720,32,0,Private,Installment,Petrol,Hatchback
+APP491,CUST1491,Hyundai,IONIQ,2024,32000,28800,3200,48,3.60,650,2026-09-18,approved,Full-time,730,30,0,Private,EV Finance,Electric,Hatchback
+APP492,CUST1492,Hyundai,Santa Fe,2024,45000,40500,4500,48,4.00,923,2026-09-18,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP493,CUST1493,Kia,Rio,2024,20000,18000,2000,36,3.10,526,2026-09-19,approved,Full-time,700,30,0,Private,Installment,Petrol,Hatchback
+APP494,CUST1494,Kia,Ceed,2024,24000,21600,2400,48,3.30,485,2026-09-19,approved,Full-time,710,32,0,Private,Installment,Petrol,Hatchback
+APP495,CUST1495,Kia,Niro,2024,32000,28800,3200,48,3.60,650,2026-09-20,approved,Full-time,730,30,0,Private,EV Finance,Electric,SUV
+APP496,CUST1496,Kia,Sorento,2024,45000,40500,4500,48,4.00,923,2026-09-20,approved,Full-time,750,26,0,Private,Installment,Diesel,SUV
+APP497,CUST1497,Kia,Telluride,2024,55000,49500,5500,48,4.40,1139,2026-09-21,approved,Self-employed,760,24,0,Private,Installment,Diesel,SUV
+APP498,CUST1498,Subaru,Impreza,2024,30000,27000,3000,48,3.60,608,2026-09-21,approved,Full-time,730,30,0,Private,Installment,Petrol,Hatchback
+APP499,CUST1499,Subaru,Legacy,2024,35000,31500,3500,48,3.70,710,2026-09-22,approved,Full-time,740,28,0,Private,Installment,Diesel,Sedan
+APP500,CUST1500,Subaru,Ascent,2024,48000,43200,4800,48,4.10,991,2026-09-22,approved,Full-time,760,26,0,Private,Installment,Diesel,SUV
