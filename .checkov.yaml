@@ -1,0 +1,5 @@
+# .checkov.yaml
+# Skip lab-only checks that are not applicable for a demonstration environment
+skip-check:
+  - CKV_AWS_144   # Cross-region replication (not needed for lab)
+  - CKV2_AWS_62   # S3 event notifications (not needed for lab)
