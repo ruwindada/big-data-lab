@@ -7,6 +7,11 @@ locals {
 }
 
 # ============================================
+# DATA SOURCES
+# ============================================
+data "aws_caller_identity" "current" {}
+
+# ============================================
 # RANDOM SUFFIX (prevents name collisions)
 # ============================================
 resource "random_id" "suffix" {
@@ -65,12 +70,57 @@ resource "aws_s3_bucket_public_access_block" "data_lake" {
 # ============================================
 # 🔒 SECURITY: S3 ACCESS LOGGING
 # ============================================
+# 🔒 SECURITY: S3 LOG BUCKET (Encrypted, Versioned, Blocked Public Access)
 resource "aws_s3_bucket" "log_bucket" {
   bucket        = "${local.prefix}-logs"
   force_destroy = true
 
   tags = {
     Name = "Log Bucket for ${local.prefix}"
+  }
+}
+
+# 🔒 SECURITY: Log Bucket Versioning
+resource "aws_s3_bucket_versioning" "log_bucket" {
+  bucket = aws_s3_bucket.log_bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+# 🔒 SECURITY: Log Bucket KMS Encryption
+resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket" {
+  bucket = aws_s3_bucket.log_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.s3_key.arn
+      sse_algorithm     = "aws:kms"
+    }
+  }
+}
+
+# 🔒 SECURITY: Log Bucket Public Access Block
+resource "aws_s3_bucket_public_access_block" "log_bucket" {
+  bucket = aws_s3_bucket.log_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+# 🔒 SECURITY: Log Bucket Lifecycle (Clean up old logs)
+resource "aws_s3_bucket_lifecycle_configuration" "log_bucket" {
+  bucket = aws_s3_bucket.log_bucket.id
+
+  rule {
+    id     = "expire-old-logs"
+    status = "Enabled"
+
+    expiration {
+      days = 30
+    }
   }
 }
 
@@ -90,6 +140,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "data_lake" {
   rule {
     id     = "archive-old-data"
     status = "Enabled"
+
+    # 🔒 SECURITY: Abort incomplete multipart uploads after 7 days
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
 
     transition {
       days          = 30
@@ -116,6 +171,46 @@ resource "aws_kms_key" "s3_key" {
   description             = "KMS key for S3 bucket ${local.prefix}"
   deletion_window_in_days = 7
   enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        }
+        Action   = "kms:*"
+        Resource = "*"
+      },
+      {
+        Sid    = "Allow Glue Service to Use KMS"
+        Effect = "Allow"
+        Principal = {
+          Service = "glue.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:Encrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = "*"
+      },
+      {
+        Sid    = "Allow Athena Service to Use KMS"
+        Effect = "Allow"
+        Principal = {
+          Service = "athena.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
 
 resource "aws_kms_key_alias" "s3_key" {
@@ -128,6 +223,34 @@ resource "aws_kms_key" "glue_key" {
   description             = "KMS key for Glue ${local.prefix}"
   deletion_window_in_days = 7
   enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        }
+        Action   = "kms:*"
+        Resource = "*"
+      },
+      {
+        Sid    = "Allow Glue Service to Use KMS"
+        Effect = "Allow"
+        Principal = {
+          Service = "glue.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:Encrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
 
 resource "aws_kms_key_alias" "glue_key" {
@@ -140,6 +263,33 @@ resource "aws_kms_key" "athena_key" {
   description             = "KMS key for Athena ${local.prefix}"
   deletion_window_in_days = 7
   enable_key_rotation     = true
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+        }
+        Action   = "kms:*"
+        Resource = "*"
+      },
+      {
+        Sid    = "Allow Athena Service to Use KMS"
+        Effect = "Allow"
+        Principal = {
+          Service = "athena.amazonaws.com"
+        }
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
 }
 
 resource "aws_kms_key_alias" "athena_key" {
