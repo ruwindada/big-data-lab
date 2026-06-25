@@ -26,23 +26,33 @@ resource "aws_s3_bucket" "data_lake" {
   }
 }
 
+# ============================================
+# 🔒 SECURITY: S3 VERSIONING (Enabled)
+# ============================================
 resource "aws_s3_bucket_versioning" "data_lake" {
   bucket = aws_s3_bucket.data_lake.id
   versioning_configuration {
-    status = "Disabled"
+    status = "Enabled"
   }
 }
 
+# ============================================
+# 🔒 SECURITY: S3 ENCRYPTION (KMS)
+# ============================================
 resource "aws_s3_bucket_server_side_encryption_configuration" "data_lake" {
   bucket = aws_s3_bucket.data_lake.id
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      kms_master_key_id = aws_kms_key.s3_key.arn
+      sse_algorithm     = "aws:kms"
     }
   }
 }
 
+# ============================================
+# 🔒 SECURITY: S3 BLOCK PUBLIC ACCESS
+# ============================================
 resource "aws_s3_bucket_public_access_block" "data_lake" {
   bucket = aws_s3_bucket.data_lake.id
 
@@ -52,11 +62,100 @@ resource "aws_s3_bucket_public_access_block" "data_lake" {
   restrict_public_buckets = true
 }
 
-# Folder structure
+# ============================================
+# 🔒 SECURITY: S3 ACCESS LOGGING
+# ============================================
+resource "aws_s3_bucket" "log_bucket" {
+  bucket        = "${local.prefix}-logs"
+  force_destroy = true
+
+  tags = {
+    Name = "Log Bucket for ${local.prefix}"
+  }
+}
+
+resource "aws_s3_bucket_logging" "data_lake" {
+  bucket = aws_s3_bucket.data_lake.id
+
+  target_bucket = aws_s3_bucket.log_bucket.id
+  target_prefix = "s3-access-logs/"
+}
+
+# ============================================
+# 🔒 SECURITY: S3 LIFECYCLE (Archive & Expire)
+# ============================================
+resource "aws_s3_bucket_lifecycle_configuration" "data_lake" {
+  bucket = aws_s3_bucket.data_lake.id
+
+  rule {
+    id     = "archive-old-data"
+    status = "Enabled"
+
+    transition {
+      days          = 30
+      storage_class = "STANDARD_IA"
+    }
+
+    transition {
+      days          = 90
+      storage_class = "GLACIER"
+    }
+
+    expiration {
+      days = 365
+    }
+  }
+}
+
+# ============================================
+# 🔒 SECURITY: KMS KEYS (Encryption at Rest)
+# ============================================
+
+# KMS Key for S3
+resource "aws_kms_key" "s3_key" {
+  description             = "KMS key for S3 bucket ${local.prefix}"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+}
+
+resource "aws_kms_key_alias" "s3_key" {
+  name          = "alias/${local.prefix}-s3-key"
+  target_key_id = aws_kms_key.s3_key.key_id
+}
+
+# KMS Key for Glue
+resource "aws_kms_key" "glue_key" {
+  description             = "KMS key for Glue ${local.prefix}"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+}
+
+resource "aws_kms_key_alias" "glue_key" {
+  name          = "alias/${local.prefix}-glue-key"
+  target_key_id = aws_kms_key.glue_key.key_id
+}
+
+# KMS Key for Athena
+resource "aws_kms_key" "athena_key" {
+  description             = "KMS key for Athena ${local.prefix}"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+}
+
+resource "aws_kms_key_alias" "athena_key" {
+  name          = "alias/${local.prefix}-athena-key"
+  target_key_id = aws_kms_key.athena_key.key_id
+}
+
+# ============================================
+# S3 FOLDERS
+# ============================================
 resource "aws_s3_object" "folders" {
   for_each = toset(["raw/", "processed/", "scripts/", "athena-results/", "temp/"])
   bucket   = aws_s3_bucket.data_lake.id
   key      = each.value
+
+  depends_on = [aws_s3_bucket.data_lake]
 }
 
 # ============================================
@@ -69,6 +168,11 @@ resource "aws_s3_object" "sample_data" {
   etag   = filemd5("${path.module}/data/transactions11.csv")
 
   content_type = "text/csv"
+
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.folders["raw/"]
+  ]
 }
 
 # ============================================
@@ -79,11 +183,41 @@ resource "aws_s3_object" "glue_script" {
   key    = "scripts/transform.py"
   source = "${path.module}/scripts/transform.py"
   etag   = filemd5("${path.module}/scripts/transform.py")
+
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.folders["scripts/"]
+  ]
 }
 
 # ============================================
-# IAM ROLES
+# 🔒 SECURITY: GLUE SECURITY CONFIGURATION (Encryption)
 # ============================================
+resource "aws_glue_security_configuration" "glue_security" {
+  name = "${local.prefix}-glue-security"
+
+  encryption_configuration {
+    cloudwatch_encryption {
+      cloudwatch_encryption_mode = "SSE-KMS"
+      kms_key_arn                = aws_kms_key.glue_key.arn
+    }
+
+    job_bookmarks_encryption {
+      job_bookmarks_encryption_mode = "CSE-KMS"
+      kms_key_arn                   = aws_kms_key.glue_key.arn
+    }
+
+    s3_encryption {
+      s3_encryption_mode = "SSE-KMS"
+      kms_key_arn        = aws_kms_key.s3_key.arn
+    }
+  }
+}
+
+# ============================================
+# 🔒 SECURITY: IAM ROLES (Least Privilege)
+# ============================================
+
 # Glue Role
 resource "aws_iam_role" "glue_role" {
   name = "${local.prefix}-glue-role"
@@ -123,6 +257,18 @@ resource "aws_iam_role_policy" "glue_s3_access" {
       {
         Effect = "Allow"
         Action = [
+          "kms:Decrypt",
+          "kms:Encrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = [
+          aws_kms_key.s3_key.arn,
+          aws_kms_key.glue_key.arn
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
@@ -131,43 +277,14 @@ resource "aws_iam_role_policy" "glue_s3_access" {
       }
     ]
   })
+
+  depends_on = [
+    aws_iam_role.glue_role,
+    aws_s3_bucket.data_lake,
+    aws_kms_key.s3_key,
+    aws_kms_key.glue_key
+  ]
 }
-
-# Redshift Role
-# resource "aws_iam_role" "redshift_role" {
-#   name = "${local.prefix}-redshift-role"
-#   assume_role_policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [{
-#       Effect = "Allow"
-#       Principal = { Service = "redshift-serverless.amazonaws.com" }
-#       Action = "sts:AssumeRole"
-#     }]
-#   })
-
-#   tags = {
-#     Name = "${local.prefix}-redshift-role"
-#   }
-# }
-
-# resource "aws_iam_role_policy" "redshift_s3_access" {
-#   name = "redshift-s3-access"
-#   role = aws_iam_role.redshift_role.id
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [{
-#       Effect = "Allow"
-#       Action = [
-#         "s3:GetObject",
-#         "s3:ListBucket"
-#       ]
-#       Resource = [
-#         aws_s3_bucket.data_lake.arn,
-#         "${aws_s3_bucket.data_lake.arn}/processed/*"
-#       ]
-#     }]
-#   })
-# }
 
 # Athena Role
 resource "aws_iam_role" "athena_role" {
@@ -180,6 +297,10 @@ resource "aws_iam_role" "athena_role" {
       Action = "sts:AssumeRole"
     }]
   })
+
+  tags = {
+    Name = "${local.prefix}-athena-role"
+  }
 }
 
 resource "aws_iam_role_policy" "athena_s3_access" {
@@ -214,9 +335,28 @@ resource "aws_iam_role_policy" "athena_s3_access" {
           "glue:GetDatabase"
         ]
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "kms:Decrypt",
+          "kms:GenerateDataKey"
+        ]
+        Resource = [
+          aws_kms_key.s3_key.arn,
+          aws_kms_key.athena_key.arn
+        ]
       }
     ]
   })
+
+  depends_on = [
+    aws_iam_role.athena_role,
+    aws_s3_bucket.data_lake,
+    aws_s3_object.folders["athena-results/"],
+    aws_kms_key.s3_key,
+    aws_kms_key.athena_key
+  ]
 }
 
 # ============================================
@@ -224,12 +364,21 @@ resource "aws_iam_role_policy" "athena_s3_access" {
 # ============================================
 resource "aws_glue_catalog_database" "bank_db" {
   name = "${local.prefix}_bank_db"
+
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.sample_data
+  ]
 }
 
+# ============================================
+# 🔒 SECURITY: GLUE CRAWLER (with Security Configuration)
+# ============================================
 resource "aws_glue_crawler" "raw_crawler" {
   name          = "${local.prefix}-raw-crawler"
   database_name = aws_glue_catalog_database.bank_db.name
   role          = aws_iam_role.glue_role.arn
+  security_configuration = aws_glue_security_configuration.glue_security.name
 
   s3_target {
     path = "s3://${aws_s3_bucket.data_lake.id}/raw/"
@@ -242,17 +391,30 @@ resource "aws_glue_crawler" "raw_crawler" {
 
   schedule = null
 
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.sample_data,
+    aws_glue_catalog_database.bank_db,
+    aws_iam_role.glue_role,
+    aws_iam_role_policy.glue_s3_access,
+    aws_glue_security_configuration.glue_security
+  ]
+
   tags = {
     Name = "${local.prefix}-raw-crawler"
   }
 }
 
+# ============================================
+# 🔒 SECURITY: GLUE JOB (with Security Configuration)
+# ============================================
 resource "aws_glue_job" "transform_job" {
   name              = "${local.prefix}-transform-job"
   role_arn          = aws_iam_role.glue_role.arn
   glue_version      = "4.0"
   number_of_workers = var.glue_number_of_workers
   worker_type       = var.glue_worker_type
+  security_configuration = aws_glue_security_configuration.glue_security.name
 
   command {
     name            = "glueetl"
@@ -271,75 +433,69 @@ resource "aws_glue_job" "transform_job" {
   max_retries = 0
   timeout     = var.glue_timeout_minutes
 
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.glue_script,
+    aws_glue_catalog_database.bank_db,
+    aws_iam_role.glue_role,
+    aws_iam_role_policy.glue_s3_access,
+    aws_glue_security_configuration.glue_security
+  ]
+
   tags = {
     Name = "${local.prefix}-transform-job"
   }
 }
 
 # ============================================
-# REDSHIFT SERVERLESS
-# ============================================
-# resource "aws_redshiftserverless_namespace" "analytics" {
-#   namespace_name      = "${local.prefix}-namespace"
-#   admin_username      = "admin"
-#   admin_user_password = var.redshift_admin_password
-#   db_name             = "dev"
-#   iam_roles           = [aws_iam_role.redshift_role.arn]
-
-#   tags = {
-#     Name = "${local.prefix}-namespace"
-#   }
-# }
-
-# resource "aws_redshiftserverless_workgroup" "analytics" {
-#   workgroup_name = "${local.prefix}-workgroup"
-#   namespace_name = aws_redshiftserverless_namespace.analytics.namespace_name
-#   base_capacity  = var.redshift_base_capacity
-
-#   publicly_accessible = true
-
-#   tags = {
-#     Name = "${local.prefix}-workgroup"
-#   }
-
-#   depends_on = [aws_redshiftserverless_namespace.analytics]
-
-#   # TIMEOUT BLOCK
-#   timeouts {
-#     create = "30m"
-#     update = "30m"
-#     delete = "30m"
-#   }
-# }
-
-# ============================================
-# ATHENA WORKGROUP + NAMED QUERIES
+# 🔒 SECURITY: ATHENA WORKGROUP (with KMS Encryption)
 # ============================================
 resource "aws_athena_workgroup" "primary" {
-  name = "${local.prefix}-workgroup"  # Changed from "primary"
-  
+  name = "${local.prefix}-workgroup"
+
   configuration {
     result_configuration {
       output_location = "s3://${aws_s3_bucket.data_lake.id}/athena-results/"
+
+      encryption_configuration {
+        encryption_option = "SSE_KMS"
+        kms_key_arn       = aws_kms_key.athena_key.arn
+      }
     }
   }
-  
+
   state = "ENABLED"
+
+  depends_on = [
+    aws_s3_bucket.data_lake,
+    aws_s3_object.folders["athena-results/"],
+    aws_iam_role.athena_role,
+    aws_iam_role_policy.athena_s3_access,
+    aws_kms_key.athena_key
+  ]
 }
 
+# ============================================
+# ATHENA NAMED QUERIES
+# ============================================
 resource "aws_athena_named_query" "count_transactions" {
   name      = "${local.prefix}-count-transactions"
   database  = aws_glue_catalog_database.bank_db.name
   query     = <<-SQL
     SELECT 
-      merchant, 
+      vehicle_brand,
       COUNT(*) as transaction_count,
-      ROUND(SUM(amount), 2) as total_volume
+      ROUND(SUM(loan_amount_eur), 2) as total_volume
     FROM raw 
-    GROUP BY merchant
+    GROUP BY vehicle_brand
     ORDER BY total_volume DESC
   SQL
   workgroup = aws_athena_workgroup.primary.name
+
+  depends_on = [
+    aws_glue_catalog_database.bank_db,
+    aws_athena_workgroup.primary
+  ]
 }
 
 resource "aws_athena_named_query" "suspicious_transactions" {
@@ -347,18 +503,22 @@ resource "aws_athena_named_query" "suspicious_transactions" {
   database  = aws_glue_catalog_database.bank_db.name
   query     = <<-SQL
     SELECT 
-      transaction_id,
-      customer_id,
-      amount,
-      merchant,
-      status,
-      timestamp
+      vehicle_brand,
+      vehicle_model,
+      loan_amount_eur,
+      credit_score,
+      debt_to_income_ratio
     FROM raw 
-    WHERE status = 'flagged' OR merchant = 'Unknown'
-    ORDER BY amount DESC
+    WHERE credit_score < 650 OR debt_to_income_ratio > 40
+    ORDER BY loan_amount_eur DESC
     LIMIT 20
   SQL
   workgroup = aws_athena_workgroup.primary.name
+
+  depends_on = [
+    aws_glue_catalog_database.bank_db,
+    aws_athena_workgroup.primary
+  ]
 }
 
 resource "aws_athena_named_query" "customer_volume" {
@@ -368,12 +528,17 @@ resource "aws_athena_named_query" "customer_volume" {
     SELECT 
       customer_id,
       COUNT(*) as tx_count,
-      ROUND(SUM(amount), 2) as total_spent,
-      ROUND(AVG(amount), 2) as avg_tx_value
+      ROUND(SUM(loan_amount_eur), 2) as total_spent,
+      ROUND(AVG(loan_amount_eur), 2) as avg_loan
     FROM raw 
     GROUP BY customer_id
     ORDER BY total_spent DESC
     LIMIT 10
   SQL
   workgroup = aws_athena_workgroup.primary.name
+
+  depends_on = [
+    aws_glue_catalog_database.bank_db,
+    aws_athena_workgroup.primary
+  ]
 }
