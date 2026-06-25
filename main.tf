@@ -70,6 +70,7 @@ resource "aws_s3_bucket_public_access_block" "data_lake" {
 # ============================================
 # 🔒 SECURITY: S3 ACCESS LOGGING
 # ============================================
+
 # 🔒 SECURITY: S3 LOG BUCKET (Encrypted, Versioned, Blocked Public Access)
 resource "aws_s3_bucket" "log_bucket" {
   bucket        = "${local.prefix}-logs"
@@ -117,6 +118,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "log_bucket" {
   rule {
     id     = "expire-old-logs"
     status = "Enabled"
+
+    # 🔒 SECURITY: Abort incomplete multipart uploads after 7 days
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
 
     expiration {
       days = 30
